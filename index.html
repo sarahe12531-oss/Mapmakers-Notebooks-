@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Mad Mapmaker's Notebooks</title>
+  <link rel="stylesheet" href="https://themapmakersnotebooks.neocities.org/More-widgets/CSS-JS/home.css">
+  <style>
+  </style>
+</head>
+<body>
+
+<canvas id="starfield" aria-hidden="true"></canvas>
+<!-- Add to the container section -->
+<div class="floating-elements">
+    <div class="floating-element" style="top: 10%; left: 5%; animation-delay: 0s;">
+        <i class="fas fa-moon"></i>
+</div>
+    <div class="floating-element" style="top: 20%; right: 15%; animation-delay: 1s;">
+        <i class="fas fa-lightbulb"></i>
+    </div>
+    <div class="floating-element" style="bottom: 25%; left: 20%; animation-delay: 2s;">
+        <i class="fas fa-book"></i>
+    </div>
+</div>
+
+<div id="star-container"></div>
+<div class="star-point" style="top:14%; left:64%;"></div>
+<div class="star-point" style="top:23%; left:13%;"></div>
+<div class="star-point" style="top:33%; left:40%;"></div>
+<div class="star-point" style="top:13%; left:29%;"></div>
+<div class="star-point" style="top:16%; left:50%;"></div>
+<div class="star-point" style="top:6%;  left:33%;"></div>
+<div class="star-point" style="top:52%; left:48%;"></div>
+<div class="star-point" style="top:43%; left:43%;"></div>
+<div class="star-point" style="top:13%; left:24%;"></div>
+<div class="star-point" style="top:5%; left:63%;"></div>
+
+  <!-- THE CELESTIAL NAVIGATION INTERFACE -->
+  <div class="moon-nav-wrapper">
+    <button class="moon-trigger" id="moonBtn" onclick="toggleCelestialMenu()">🌙</button>
+    <nav class="celestial-menu" id="celestialMenu">
+      <div class="menu-header"> A "Navigation" Menu</div>
+      <ul class="menu-links">
+        <li><a href="index.html" onclick="toggleCelestialMenu()"> Mapmaker's Landing 🦆</a></li>
+        <li><a href="https://themapmakersnotebooks.neocities.org/Web-Pages/grand-map">The Grand Map(People & Places) </a></li>
+        <li><a href="ramblings.html">Philosophical Shit (My Weirdness in Words) </a></li>
+<li><a href="https://themapmakersnotebooks.neocities.org/Web-Pages/Astrology-Magic">Physics of giving a Shit (Magic System) </a></li>
+      </ul>
+    </nav>
+  </div>
+<div class="ink-blot blot-top"></div>
+<div class="ink-blot blot-bottom"></div>
+ <div class="ink-blot-large" style="top: 26%; left: 2%; transform:rotate(59deg);opacity:.65;"></div>
+ <div class="ink-blot-large" style="top: 13%; left: 4%; transform:rotate(28deg);"></div>
+<div class="ink-splatter-spray" style="top: 10%; left: 9%; transform:rotate(-47deg);"></div>
+<div class="ink-splatter-spray" style="top: 2%; left: 11%; transform:rotate(-33deg);"></div>
+<div class="ink-splatter-spray" style="top: 3%; left: 87%; transform:rotate(-27deg);"></div>
+<div class="ink-vertical-drip" style="top: 5%; left: 7%;"></div>
+<div class="ink-blot-large"    style="top: 89%; left: 73%;transform: rotate(-21deg);"></div> 
+<!-- Hang a vertical drip coming straight down from the top double border -->
+  <div class="ink-vertical-drip" style="top: 6%; left: 8%;"></div>
+  <!-- Hang a vertical drip coming straight down from the top double border -->
+  <div class="ink-vertical-drip" style="top: 10%; left: 15%;"></div>
+  <!-- Blot 2: Pushed down the page and hanging off the right border -->
+  <div class="ink-splatter-spray" style="top: 10%; left: 38%; transform: rotate(64deg);"></div>
+  
+  <div class="menu-overlay" id="menuOverlay" onclick="toggleCelestialMenu()"></div>
+<header class="crossroads-header text-outline-shimmer atheria-body glow-title">
+<h1 class="text-outline-shimmer atheria-body glow-title" style="padding: 25px;">
+The Mad Mapmaker's Notebooks</h1>
+<div class="gradient-text" style="font-size: 28px; text-align: center;"> Welcome Home Stranger<br>
+<p style="font-size: 16px; text-align: center;"> 🕯️⋆☽┄┄┄┄┄⋆°✦°⋆┄┄┄┄┄☾⋆🕯️</p>  
+</div>
+<!-- Long Broken Drip (Left Side) -->
+<div class="ink-vertical-drip" style="top: 22%; left: 13%; width:13px; height:350px;"></div>
+<div class="ink-blot-large" style="top: 6%; left: 79%; width: 6px; height: 135px;"></div>
+
+<!-- Higher Blot (Right Side) -->
+<div class="ink-blot-large" style="top: 28%; left: 8%; width: 13px; height: 120px;"></div>
+<div class="ink-splatter-spray" style="top: 18%; left: 6%;"></div>
+<div class="nebula nebula-1"></div>
+<div class="nebula nebula-2"></div>
+ <p class="crossroads-header text-outline-shimmer atheria-body glow-title" style="font-family: 'Baskerville', serif;margin:25px;"> What is mapped becomes real. What is unmapped, unravels.<br>
+ Those that map, are bound to what they witness. <br>
+Atheria is not entered by roads or rules. It is entered by inclination. <br>
+<br> Choose wisely. Lest you be chosen poorly."</p>
+  </header>
+<!-- DROP THIS DIRECTLY BELOW YOUR MAIN TITLE -->
+<div style="text-align: left; max-width: 450px; margin: 40px auto; padding: 25px; background: rgba(18, 16, 28, 0.4); border-left: 3px solid var(--glow-amethyst); font-family: 'Baskerville', serif; color: var(--text-primary);">
+  <p style="font-size: 1.15rem; line-height: 1.8; font-style: italic; color: var(--glow-silver); margin-top: 0;">
+Welcome to Atheria. I hope you lose yourself just enough to find something worth bringing home.  If you feel lost or need direction, look for the moon in the corner, it will lead you home. Please bear wth me as I slowly get around to adding the home moons to each page. The cards below lead to various paths you can wander down.</p></div>
+<!-- THE OFFICIAL MALLARD CREST LINE BREAK -->
+<div style="text-align: center; margin: 50px auto; position: relative;">
+  <span style="display: inline-block; width: 80px; height: 1px; background: linear-gradient(to left, var(--border-cyan), transparent); vertical-align: middle; margin-right: 15px;"></span>
+  <span style="font-size: 1.9rem; vertical-align: middle; cursor: help; filter: drop-shadow(0 0 10px var(--glow-gold));" title="Official Registry Waterfowl (Resonance Multiplier: 1.00x)"> 🦆</span>
+  <span style="display: inline-block; width: 80px; height: 1px; background: linear-gradient(to right, var(--border-cyan), transparent); vertical-align: middle; margin-left: 15px;"></span>
+</div>
+<br>
+<p class="crossroads-header text-outline-shimmer atheria-body" style="font-family:'Baskerville',serif;text-align:center;font-size:18px;"> • Regret Level: Six | Strictly Maintained • </p>
+<br>
+<p class="box-shadow" style="font-size: 17px; font-family: Baskerville,serif; margin: 0 auto; border-radius:8px; border:1px solid; color: #2DDFFF;padding:25px;width:550px;text-align:center;">
+Typos will be dealt with in the order they become annoying. Please place time keeping devices in the receptacle on your left. Your other left. Adjust your expectations & lower your standards, as Atheria is ran like a loose ship. Primarily because that's the only kind I know how to run. Please, enjoy your stay, and keep your hands in your immediate line of sight. Thank you. </p>
+  <!-- MASONRY BULLETIN BOARD GRID -->
+  <main class="corkboard-canvas">
+<!-- Main Heavy Ink Pool - Safe in the Left Margin -->
+<div class="ink-blot-large" style="top:18%; left: 73%; width: 120px;  height: 110px; border-radius: 45% 55% 40% 63%; 
+  z-index: 3;opacity:.65;background: radial-gradient(circle at 45% 50%, #09030d 0%, #1a0726 50%, #33134E 80%, rgba(51, 19, 78, 0) 100%);  filter: blur(12px);"></div>
+
+<!-- Drip 1: Short Left Drip -->
+<div class="ink-vertical-drip" style="top: 50%; left: 12%;height: 142px; width: 10px;  z-index: 5;
+  background: linear-gradient(to bottom, #1E132B 0%, rgba(51, 19, 78, 0) 100%);filter: blur(2px);"></div>
+<!-- Drip 3: Short Left Drip -->
+<div class="ink-vertical-drip" style="top: 84%; left: 86%;height:100px;width: 14px; 
+  z-index: 5;background: linear-gradient(to bottom, #09030d 0%, rgba(51, 19, 78, 0) 100%);filter: blur(12px);"></div>
+
+<!-- Drip 2: Longer Right Drip -->
+<div class="ink-vertical-drip" style="top: 12%; left: 58%;height: 160px;width: 9px;z-index: 5; background: linear-gradient(to bottom, #1a0726 0%, #1a0726 75%, #09030d 90%,rgba(51, 19, 78, 0) 100%);opacity:0.55;filter: blur(3px);"></div>
+
+
+    <!-- BLOCK 1: CIVIC LAWS CONTAINER -->
+    <section class="parchment-card">
+      <div>
+        <div class="card-meta">The Creation of Atheria</div>
+        <h2 class="card-title text-stroke" style="font-size:18px;font-family: 'Noctis Serif', serif;">The Song That Bent the World</h2>
+        <p class="card-body">Start at the begininng with the meeting of Light & Shadow, the Void's Lament, and the birth of humanity. It was the Goddess of death, Serisyn who bestowed the Two Mirrors: the inward mirror, allowing us to see our own choices, and the outward mirror, allowing us to see ourselves in others. This transformation turned humanity into resonant beings.</p>
+        <details class="card-archive-drawer">
+<summary style="font-size:18px;font-family: 'Noctis Serif', serif;">The Salt Room</summary>
+          <p style="color:#73D200; font-size:16px;font-family: 'Noctis Serif', serif;">Arenox & Vaessa, Shadow and Empthy, are lost in Elsewhere. Everyone that has attempted to bring them out, has gone in, never to be seen again. Elsewhere doesn't keep you with chains or cages. It does not need to. It keeps you there with relevance. It shapes itself around you with everything you almost did. Everything missed opportunity, the one that got away. Every apology you never got to say. There is a map that shows the way out. Though, it has been scattered throughout ten notebooks. For it was written by, a hand that didn't understand it's own importance. By an author, sometimes lost in time but who's impact is always felt. Finding them, means finding the map of Elsewhere. </p>
+        </details>
+      </div>
+      <a href="https://themapmakersnotebooks.neocities.org/A-Sheet-of-Endless-Music" class="card-link"> A Sheet of Endless Music →</a>
+       <a href="https://themapmakersnotebooks.neocities.org/Atheria/grey-elsewhere-main" class="card-link"> Travel into Elsewhere →</a>
+    </section>
+    <!-- BLOCK 2: UNFILTERED ARCHIVES CONTAINER -->
+    <section class="parchment-card" style="font-size:18px;font-family: 'Noctis Serif', serif;">
+      <div>
+        <div class="card-meta">The Vein Beneath the World</div>
+        <h2 class="card-title text-stroke">Black Lantern University</h2>
+        <p class="card-body" style="font-size:16px;font-family: 'Noctis Serif', serif;color:#73D200;"> This Shroudspire institution is devoted to the teaching of Serisyn as goddess of death, mirrors and transformations. Their founding is of unusual circumstances. All six had either near death experiences or were closely tied to River by profession or familiar ties. After the founding, all six would return to the river. They would not get a second departure. </p>
+<details class="card-archive-drawer">
+<summary style="font-size:18px;font-family: 'Noctis Serif', serif;">The Six Founders & Five Rites</summary>
+<p style="font-size:16px;font-family: 'Noctis Serif', serif;color:#73D200;">
+<b>I. The Founder Who Heard Mercy: </b> <br> 
+He returned believing mercy was permission to remain unfinished. <br>				
+<b>II. The Founder Who Heard Judgment:</b><br> 
+She returned with terror in her mouth and doctrine in her hands, <br> 
+speaking as though truth must always wound in order to matter.<br>			
+<b>III. The Founder Who Heard Silence:</b> <br> 
+He returned devoted to hush, to restraint, to the sacredness of not speaking too quickly.<br>		
+<b>IV. The Founder Who Heard Exposure:</b> <br> 
+She returned fierce in her hatred of pretense, determined to tear lies from every soul she met.<br>				
+<b>V. The Founder Who Heard Restoration:</b> <br> 
+Innocence, was not what had brought him back. It was the terrible possibility that even after distortion, 
+something true could still be mended.<br>
+<b>VI. The Founder Who Heard Warning:</b><br> 
+What she heard in the river was not doom, but caution. 
+A warning, she made sure to heed. </p>
+        </details>
+      </div>
+  <a href="https://themapmakersnotebooks.neocities.org/Web-Pages/black-lantern" class="card-link">Apply to Black Lantern University →</a><br> 
+<a href="https://themapmakersnotebooks.neocities.org/More%20notion%20widgets/Vein-Beneath" class="card-link"> Visit the Vein Beneath the World → </a>
+    </section>
+
+<!-- CARD 3: THE HIGH GUILDS INFO -->
+    <section class="parchment-card" style="font-size:18px;font-family: 'Noctis Serif', serif;">  
+      <div>  
+        <div class="card-meta">Laws, Punishments & The People</div>
+        <h2 class="card-title text-stroke">The Houses of Judgement & Pettiness</h2>
+<p class="card-body" style="font-size:16px;font-family: 'Noctis Serif', serif;color:#73D200;"> <em> "Major crimes destroy cities. Minor ones destroy resonance. 
+The Courts handle the latter more aggressively."</em> <br>
+The High Statutes, (the boring laws) are overseen by the House of Judgement. They are the bedrock of society, signed at the Treaty of Ink and Men. They govern the "Mandated Laws" of nature, and enforced by the Gendarme of Echoes.</p>      
+<details class="card-archive-drawer">
+<summary style="font-size:18px;font-family: 'Noctis Serif', serif;">Douchebaggery Prohibitions & the Gendarme of Echoes.</summary>         
+<p style="font-size:16px;font-family: 'Noctis Serif', serif;color:#73D200;">The House of Pettiness oversees crimes in violation of the Annoyance Laws. 
+These are classified as <b>"Emotional Arson", </b>therefore, they take these infractions very seriously. <br>
+They are enforced by the <b>Gendarme of Echoes. </b>  <br>
+There are four arms of the Gendarmes.<br>     
+<b>Civic Guard:</b> <br>Enforces "Douchebaggery Prohibitions".<br>
+<b>Watchers: </b><br> Investigates metaphysical ambiguity and monitors the Rootmother River. <br>
+<b>Wardens:</b><br> Prosecuting structural lies like buildings crafted from unstable "Spite-Iron."<br>
+<b>Agisters:</b><br> Oversees ecological law and creature protection. They manage the Husbandry Farms.</p>
+        </details>
+      </div>
+      <a href="https://themapmakersnotebooks.neocities.org/Web-Pages/GovernmentSector" class="card-link"> Check Criminal Status →</a>
+    </section>
+    <!-- CARD 4: THE RAMBLINGS / UNFILTERED VAULT -->
+      <!-- CARD 5: THE BROODING TRAY -->
+    <section class="parchment-card" style="font-size:18px;font-family: 'Noctis Serif', serif;">
+      <div>
+        <div class="card-meta">Reading Path & A Word With Gods</div>
+        <h2 class="card-title text-stroke">Echorin Vareth</h2>
+        <p class="card-body" style="font-size:16px;font-family: 'Noctis Serif', serif;color:#73D200;"> Known as the The Rootmother's last note and the First Listener, Echorin is a savior tasked with reverberating the original Song of Lysera. He is currently searching for the ten lost notebooks that map the resonance of Elsewhere. Echorin does not just remember; he "reverberates." He maps emotional resonance and acts as a living tuning fork to bring lost souls like Vaessa and Arenox home. He is what Arenox could have been: a being who witnesses the wound without being consumed by the bleeding.</p>
+        <details class="card-archive-drawer">
+          <summary style="font-size:18px;font-family: 'Noctis Serif', serif;"> The First Listener</summary>
+<p style="font-size:16px;font-family: 'Noctis Serif', serif;color:#73D200;">Followed by not one, but two gnawing entities. The Song, that guides him and, a more sinister being, the Earworm. Insatiable and irresistable that grew from himself then crawled in throuh his ear to learn his posture. Often tempting and succeeding to lead him astray. Despite this, at heart, Echorin is defined by attention. He listens to rivers, to silence, to grief, to memory, and to the emotional shape places leave behind. He does not map geography in the ordinary sense. He maps the emotional impact of places and people. Its resonance or the echo a place leaves in a heart, the sorrow caught in a road, the tenderness that clings to a ruin, the way a field remembers joy after devastation. For him, the truest landscape is emotional and spiritual rather than physical.</p>
+        </details>
+      </div>
+      <a href="https://themapmakersnotebooks.neocities.org/first-listener" class="card-link">Visit the First 
+Listener →</a><br>
+<a href="https://themapmakersnotebooks.neocities.org/Atherian/Personal-Lives-Divine-Beings" class="card-link"> Personal Business of Gods →</a>
+    </section>
+  </main>
+
+<p style="font-size: 1.0em; text-align: center;"> 🕯️⋆☽┄┄┄┄┄⋆°✦°⋆┄┄┄┄┄☾⋆🕯️<br>
+"Meaning cannot breathe in perfect notes, it lives in the space between them"</p>   
+<br>
+<br>
+<details class="card-archive-drawer text-outline" style="font-size:18px;font-family: 'Noctis Serif', serif;margin:30px;">
+<summary style="font-size:18px;font-family: 'Noctis Serif', serif;">Obligitory Preface Statement</summary>
+<p class="text-outline" style="font-size:16px;font-family:'Noctis Serif', serif;margin:30px;">I am told this sort of introduction is customary so here is my feeble attempt at an intro. This site is made for wider screen sizes but I try my best to make every page both mobile and desktop friendly. This is a site is something I've been working on in my head for awhile and finally decided to actually get it out. Atheria has been a way for me to discover things about myself I didn't know before. I've loved writing for as long as I can remember, I guess its something I felt naturally good at, and I don't have many of those. Mostly its just a random assortment of pages I've attempted to connect to each other. I've always been a poet, that came easy to me, long narrative writing was always a challenge for me but its getting easier I believe. If you are the wandering adventuring type, honestly just pick a page and wing it. You never know what each page has. For straight up prose, head to the First Listener page or the Creation story pages. The country pages also have some vignettes. This is a sandbox, go have fun just don't eat the sand, its not a treat. I'm going to slip into my bureaucratic zoot suit now. You matter. You are loved 🖤
+</p>
+</details>
+<br>
+<p class="text-outline" style="font-size:16px;font-family:'Noctis Serif', serif;margin:30px;">Atheria, was born of a want shaped desire and is currently held together by an incredibly stressed cartographer. It's strongly recommended that you adjust your expectations and lower your standards. If you're looking for a carefully structured high fantasy with a recommended reading order, I'm afraid you've wandered into the wrong forest. There isn't one, the <b>'high'</b> might just be the only thing I can guarantee right now. I can't give you rigid structure, or a single straight path to follow. My pretzel brain simply won't allow it. What I can offer, is a sandbox to explore, a new perspective, genuine empathy, and the humor in any situation.</p>
+<p class="text-outline" style="font-size:16px;font-family:'Noctis Serif', serif;margin:30px;">I've learned that we can't cut away the pieces of ourselves that we dislike and still call it healing. I've learned that I can be all of me, all of the time. I've learned that its ok to express my jumbled thoughts that make my brain a pretzel. Soft, a little salty and covered in cheese. Atheria isn't asking for perfection. It only asks that you hold all of you honestly. All your messy, sorrowfull, beautifully unhinged self all at once. And you still call it love. </p>
+<br>
+<div class="wrap">
+  <div class="gothic-gill-container">  
+    <details class="gothic-gill glass" style="margin:30px;padding:20px;border-radius:12px;">
+      <summary class="gill-trigger">
+        <span>📜 Unecessary Rambles</span>
+        <span class="gill-icon">✦</span>
+      </summary>
+      <div class="gill-content">
+ <div style="font-family:'Cormorant Garamond',serif; font-size:18px; line-height:1.6; margin:0;">
+  <p style="font-size:16px; margin-bottom:0; border-top:1px dotted rgba(14, 234, 255, 0.15); padding-top:15px; font-style:italic; color:var(--text-muted);">
+<b>The Vow of Inquiry: </b><br>
+<em>"A well-framed question carries more power than an unexamined answer.<br>
+ If you debate to reach a victory, you have already lost."</em>
+<br>
+Atheria isn't interested in telling you which emotions are good and which are bad. Anger, shame, grief, joy, fear, envy, none of them are villains. They're whispers, trying to tell you something. Sometimes they're terrible teachers. Sometimes they're faithful guides. Denying them rarely makes them disappear. Usually they just become less visible....until you catch your reflection retreating in the mirror. Until your shadow lags three paces behind. What you deny in yourself, will one day call your name in another’s voice. 
+<br>
+I believe most things, are forgivable, if reconciliation is truly the goal. When you hold onto grudges, you aren't burying just one person. Both of you feel its weight. Ask yourself why you're holding it. Ask why until why is exhausted. Why leads to understanding.
+<br>
+The lives of these people are driven by a desire for answers to the fundamental questions that perhaps we've all asked ourselves at one point or another. <br>
+<br>
+Those answers hold the key to the meaning of life in Atheria. <br>
+<br>
+How do you recognize when you are lying to yourself?<br>
+What does it really mean to understand another person?<br>
+How do you face grief without making it your identity?<br>
+How do you tell the truth without using it as a weapon?<br>
+Can you hear another soul without trying to possess it?<br>
+Perhaps, the most important question, every Atherian must answer. <br>
+When you take the river ride in the Vein Beneath the World, <br>
+Serisyn, goddess of death asks but one question, you cannot answer falsely. <br>
+<br>
+Are you aligned with yourself? <br>
+</p>
+<p style="font-size: 17px; font-family: Baskerville, serif;margin-bottom: 15px;">
+Atheria definitely lacks structure and in some places restraint. It doesn't follow any pre-set rules. 
+Though, following the rules has never been something I was good at.  <br>
+This has been slowly writing itself inside my head since before I knew how to write. Recently years have been a series of decisions made in attempt to discover myself. Some good ones, others not so much. Throughout every choice, good or bad, I learned many things about me. Some things may be frowned upon by more sophisticated society. However, I never did learn to care about what other's thought about me. <br> 
+Throughout these pages, you'll find lore, character driven narratives, poetry, and at times my thoughts of rants and ramblings. You can't get lost, if you don't know where you're going, and so, every path is correct. Each page was heavily inspired by Jungian psychology, various philosophers, string theory, and a deeply held belief that despite the pain, self loathing, and the impossible living standards, that there is good in this world. And it I believe it is worth fighting for. Maybe this whole thing sucks. I doubt anyone is reading this anyway.</p>
+        </div>
+      </div>
+    </details>
+    <!-- Main Heavy Ink Pool - Pushed to the Bottom Left -->
+<div class="ink-blot-large" style="
+  top: 76%; /* <-- Pushes the blot right down near the very bottom ceiling line */
+  left: 16%; 
+  width: 120px; 
+  height: 105px; 
+  border-radius: 47% 53% 40% 64%; 
+  z-index: 5;
+  background: radial-gradient(circle at 45% 50%, #09030d 0%, #1a0726 50%, #33134E 80%, rgba(51, 19, 78, 0) 100%);
+  filter: blur(5px);opacity:.85;
+"></div>
+
+<!-- Drip 1: Short Left Drip -->
+<div class="ink-vertical-drip" style="
+  top: 78%; /* <-- Kept slightly below the blot (90% + 2% spacing) */
+  left: 18%; 
+  height: 105px; 
+  width: 12px; 
+  z-index: 4;
+  background: linear-gradient(to bottom, #1a0726 0%, rgba(51, 19, 78, 0) 100%);
+  filter: blur(2px);
+"></div>
+
+<!-- Drip 2: Longer Right Drip -->
+<div class="ink-vertical-drip" style="
+  top: 72%; /* <-- Kept aligned with the first drip start point */
+  left: 12%; 
+  height: 180px; 
+  width: 10px; 
+  z-index: 4;
+  background: linear-gradient(to bottom, #1a0726 0%, #1a0726 75%, #09030d 92%, rgba(51, 19, 78, 0) 100%);
+  filter: blur(4px);
+"></div>
+<!-- Splatter 1: Small dark mist droplet close to the drip tail -->
+<div class="ink-splatter-spray" style="
+  top: 81.5%; 
+  left: 2%; 
+  width: 10px; 
+  height: 18px; 
+  background: #09030d; 
+  opacity: 0.8; 
+  filter: blur(3px); 
+  z-index: 5;
+"></div>
+<div class="ink-splatter-spray" style="
+  top: 80%; 
+  left: 12%; 
+  width: 10px; 
+  height: 15px; 
+  background: #09030d; 
+  opacity: 0.8; 
+  filter: blur(2px); 
+  z-index: 5;
+"></div>
+<!-- Splatter 2: Medium satellite droplet floating slightly lower -->
+<div class="ink-splatter-spray" style="
+  top: 67%; 
+  left: 33%; 
+  width: 17px; 
+  height: 115px; 
+  border-radius: 50% 40% 60% 45%;
+  background: #1a0726; 
+  opacity: 0.95; 
+  filter: blur(2px); 
+  z-index: 5;
+"></div>
+
+<!-- Splatter 3: Tiny high-velocity splash thrown far out to the right -->
+<div class="ink-splatter-spray" style="
+  top: 6%; 
+  left: 74%; 
+  width: 5px; 
+  height: 325px; 
+  background: #33134E; 
+  opacity: .4; 
+  filter: blur(5px);  border-radius: 50% 40% 60% 50%;
+  z-index: 5;
+"></div>
+
+<!-- Splatter 4: Soft, faint background stain underneath the main spray -->
+<div class="ink-splatter-spray" style="top:3%;left: 70%;width: 15px;height: 30px;border-radius: 43% 67% 50% 50%;
+  background: #33134E;opacity: 0.9;  filter: blur(4px); z-index: 4;"></div>
+
+<!-- Splatter 5: Heavy droplet landing tight to the left margin wall -->
+<div class="ink-splatter-spray" style="
+  top: 12.5%; 
+  left: 72%; 
+  width: 8px; 
+  height: 36px; 
+  border-radius: 55% 45% 42% 60%;
+  background: #09030d; 
+  opacity: 0.85; 
+  filter: blur(2.5px); 
+  z-index: 5;
+"></div>
+
+  <!-- STATUS MONITOR TELEMETRY GRID -->
+  <footer style="margin: 40px auto 60px auto; max-width: 500px; padding: 25px; background: rgba(18, 16, 28, 0.4); border: 1px dashed rgba(14, 234, 255, 0.15); border-radius: 6px; font-family: 'IM Fell English', serif; text-align: center; box-sizing: border-box;">
+    <div style="font-size: 1.1rem; color: var(--glow-silver); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px;">📜 Current Civic Resonance Telemetry</div>
+    <div style="display: grid; grid-template-columns: 1fr; gap: 12px; font-family: 'Baskerville', serif; font-size: 0.95rem; text-align: left; max-width: 380px; margin: 0 auto; color: var(--text-muted);">
+      <div>⚖️ <span style="color: var(--glow-gold); font-weight: bold;" id="brooding-counter">42</span> active citizens currently brooding without a license.</div>
+      <div>🥣 <span style="color: var(--glow-gold); font-weight: bold;" id="oatmeal-counter">8</span> offenders currently standing in the judicial oatmeal.</div>
+      <div>🦆 <span style="color: var(--glow-gold); font-weight: bold;">0</span> extra points generated by local Mallards (They are trying).</div>
+      <div>📁 Scribe Fiona's patience level: <span style="color: #ef4444; font-weight: bold; font-family: monospace;" id="patience-counter">0.04%</span></div>
+    </div>
+  </footer>
+
+</div>
+ <h2 class="glitch-type" style="margin:10px;padding:15px;border-radius:12px;font-size:16px;text-align:center;">
+The River Remembers what humanity forget.</h2>   
+  
+<p style="font-size: 15px; font-family: Baskerville, serif;margin-bottom: 15px;margin-left:45px;text-align:center;"> 
+Lord Bailiff, the resonance-sponge cat, is currently lying across the registry sheets, <br>
+purring at a low frequency to absorb the ambient stress of the tracking clerks. Disturbing him is illegal. </p>
+<hr>
+
+
+<script>
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+
+  function initStars() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    stars = [];
+    for(let i = 0; i < 200; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.2,
+        alpha: Math.random()
+      });
+    }
+  }
+
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach(star => {
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.radius, 0, 2 * Math.PI);
+      ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
+      ctx.fill();
+      
+      // Makes stars twinkle by subtly shifting opacity levels
+      star.alpha += (Math.random() - 0.5) * 0.05;
+      if(star.alpha < 0) star.alpha = 0;
+      if(star.alpha > 1) star.alpha = 1;
+    });
+    requestAnimationFrame(drawStars);
+  }
+
+  window.addEventListener('resize', () => { initStars(); });
+  initStars();
+  drawStars();
+ 
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const targetElement = document.querySelector(".glitch-type");
+      if (targetElement) {
+        const rawText = targetElement.textContent;
+        targetElement.textContent = ""; 
+        let charIndex = 0;
+        function executeTypewriter() {
+          if (charIndex < rawText.length) {
+            targetElement.textContent += rawText.charAt(charIndex);
+            charIndex++;
+            setTimeout(executeTypewriter, Math.floor(Math.random() * 70 + 20));
+          }
+        }
+        setTimeout(executeTypewriter, 200);
+      }
+    });
+
+ function createParticles() {
+    const container = document.createElement('div');
+    container.className = 'particle-container';
+    document.body.appendChild(container);
+    // Create 100 particles
+    for (let i = 0; i < 100; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + 'vw';
+        particle.style.top = Math.random() * 100 + 'vh';
+        particle.style.animationDuration = Math.random() * 10 + 10 + 's';
+        particle.style.animationDelay = Math.random() * 5 + 's';
+        container.appendChild(particle);
+    }
+}
+// Initialize particles
+document.addEventListener('DOMContentLoaded', createParticles);
+    function toggleCelestialMenu() {
+      const menu = document.getElementById('celestialMenu');
+      const btn = document.getElementById('moonBtn');
+      const overlay = document.getElementById('menuOverlay');
+      menu.classList.toggle('is-open');
+      btn.classList.toggle('is-active');
+      overlay.classList.toggle('is-open');
+      if (menu.classList.contains('is-open')) {
+        btn.innerText = "🌕";
+      } else {
+        btn.innerText = "🌙";
+      }
+    }
+    
+ 
+<script data-goatcounter="https://mapmakersnotebooks.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
