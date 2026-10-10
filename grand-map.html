@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atherian | Resonant Map & Census</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IM+Fell+English&family=Spectral:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pin-size: 14px;
+      --pin-ring: 2px;
+      --card-w: 260px; 
+      --bg: #0a0a0a;                 /* Matte Black */
+      --panel: #1A121D;              /* Archival Purple */
+      --border: rgba(176, 137, 12, 0.25); /* Muted gold frame */
+      --text: #e1d7e8;               /* Soft starlight white */
+      --gold-glow: #facc6b;          /* Chancellery Gold */
+      --accent-purple: #a35cb8;      /* Spectral amethyst */
+      --shadow: 0 8px 25px rgba(0, 0, 0, 0.85);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 20%, #1c0f2b 0%, var(--bg) 70%, #010003 100%);
+      color: var(--text);
+      font-family: 'Libre Baskerville', serif;
+      min-height: 100vh;
+      padding: 0;
+      line-height: 1.7;
+      background-attachment: fixed;
+    }
+    
+    header {
+      background: linear-gradient(180deg, #12051c 0%, var(--bg) 100%);
+      color: var(--gold-glow);
+      text-align: center;
+      padding: 50px 20px 30px 20px;
+    }
+
+    header h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 3rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #ffbe00;
+      text-shadow: 0 0 15px rgba(255, 190, 0, 0.35);
+      margin-bottom: 15px;
+      filter: drop-shadow(0 0 5px #49007C);
+    }
+
+    .content-intro {
+      max-width: 780px;
+      margin: 10px auto 20px;
+      color: #a394b5;
+      font-style: italic;
+      line-height: 1.7;
+      text-align: center;
+      font-size: 1.0rem;
+    }
+
+    /* STICKY TOP SECTOR NAVIGATION BAR */
+    .civic-nav-menu {
+      background: #0f071c;
+      border-top: 2px solid var(--gold-glow);
+      border-bottom: 2px solid var(--gold-glow);
+      padding: 0 10px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      list-style: none;
+    }
+
+    .nav-inner a {
+      display: block;
+      padding: 14px 20px;
+      color: #d6cbe0;
+      font-weight: bold;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      border-bottom: 3px solid transparent;
+      text-decoration: none;
+    }
+
+    .nav-inner a:hover, .nav-inner a.active-sector {
+      color: var(--gold-glow);
+      background: rgba(26, 13, 46, 0.6);
+      border-bottom: 3px solid var(--gold-glow);
+      text-shadow: 0 0 8px rgba(250, 204, 107, 0.4);
+    }
+
+    /* BULLETIN OVERALL WRAPPER */
+    .dashboard-container {
+      max-width: 950px;
+      margin: 0 auto;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .map-top-holder {
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .map {
+      position: relative;
+      width: 100%;
+      background: #060408;
+      overflow: visible;
+      border: 1px solid rgba(176, 137, 12, 0.3);
+      border-radius: 8px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.95);
+    }
+
+    .map img {
+      width: 100%;
+      height: auto;
+      object-fit: contain; 
+      display: block;
+      border-radius: 7px;
+      opacity: 0.85;
+    }
+
+    .pin {
+      position: absolute;
+      width: var(--pin-size);
+      height: var(--pin-size);
+      border-radius: 999px;
+      background: #ffbe00;
+      border: var(--pin-ring) solid #000;
+      box-shadow: 0 0 12px #ffbe00;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      z-index: 10;
+      transition: transform 0.2s;
+    }
+
+    .pin:hover { transform: translate(-50%, -50%) scale(1.3); }
+    .pin::after {
+      content: "";
+      position: absolute;
+      inset: -8px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(255,190,0,.45), rgba(255,190,0,0) 70%);
+      pointer-events: none;
+    }
+
+    .card {
+      position: absolute;
+      width: var(--card-w);
+      background: #160e1f;
+      color: #e3d9ec;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      box-shadow: var(--shadow);
+      transform: translate(-50%, calc(-100% - 15px)); 
+      display: none;
+      z-index: 20;
+      line-height: 1.5;
+    }
+
+    .card h3 {
+      margin-bottom: 4px;
+      font-size: 15px;
+      font-family: 'Cinzel', serif;
+      color: #ffbe00;
+    }
+
+    .card p { margin: 0; font-size: 13px; color: #c0b2cc; }
+    .card .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      border-top: 1px dashed rgba(176, 137, 12, 0.2);
+      padding-top: 8px;
+    }
+
+    .card a { color: #ffbe00; font-weight: bold; text-decoration: none; font-size: 12px; }
+    .card a:hover { text-decoration: underline; }
+    .card button {
+      border: 1px solid #47365d; background: #251833; color: #dcd1e3;
+      padding: 2px 8px; border-radius: 4px; cursor: pointer; font-size: 11px;
+    }
+
+    .map-list {
+      margin-top: 25px;
+      background: rgba(11, 6, 16, 0.6);
+      border: 1px solid rgba(176, 137, 12, 0.15);
+      border-radius: 6px;
+      padding: 15px;
+    }
+
+    .map-list h2 {
+      font-family: 'Cinzel', serif;
+      color: var(--gold-glow);
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .map-list .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 8px;
+    }
+
+    .map-list a {
+      display: block;
+      padding: 10px;
+      border: 1px solid rgba(84, 67, 107, 0.4);
+      border-radius: 4px;
+      text-decoration: none;
+      color: #dcd1e3;
+      background: rgba(22, 14, 31, 0.7);
+      font-size: 0.9rem;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .map-list a:hover {
+      border-color: var(--gold-glow);
+      background: #1c1226;
+      color: #fff;
+    }
+
+    .glow-text {
+      animation: glowPulse 6s ease-in-out infinite;
+    }
+
+    @keyframes glowPulse {
+      0% { text-shadow: 0 0 4px rgba(210,180,255,0.4); }
+      50% { text-shadow: 0 0 10px rgba(210,180,255,0.8); }
+      100% { text-shadow: 0 0 4px rgba(210,180,255,0.4); }
+    }
+
+    /* ── LORE COLUMN PANELS ── */
+    .content-column { display: flex; flex-direction: column; width: 100%; }
+
+    .quote {
+      font-style: italic;
+      font-size: 1.2rem;
+      padding: 20px;
+      border-left: 3px solid var(--gold-glow);
+      background: rgba(19, 10, 28, 0.6);
+      border-radius: 0 8px 8px 0;
+      box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
+      color: #dfcee6;
+      margin-bottom: 25px;
+    }
+
+    .realm-container {
+      margin-bottom: 35px;
+      padding: 25px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      scroll-margin-top: 90px;
+    }
+
+    .realm-container:hover, .realm-container.highlighted-node {
+      border-color: var(--gold-glow);
+      box-shadow: 0 0 20px rgba(250, 204, 107, 0.2);
+    }
+
+    .realm-header h2 {
+      font-family: 'Cinzel', serif;
+      color: var(--gold-glow);
+      font-size: 2rem;
+      margin-bottom: 12px;
+      border-bottom: 1px dashed rgba(176, 137, 12, 0.2);
+      padding-bottom: 5px;
+    }
+    
+    .realm-container p { margin-bottom: 10px; font-size: 0.95rem; color: #dcd1e3; }
+    .realm-container strong { color: var(--accent-purple); }
+    
+    .callout {
+      background: rgba(26, 12, 41, 0.8);
+      border-left: 4px solid var(--accent-purple);
+      padding: 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 20px 0;
+      border: 1px solid rgba(163, 92, 184, 0.1);
+    }
+    .callout h3 { color: var(--gold-glow); margin-bottom: 5px; font-size: 1.1rem; }
+
+    /* SHROUDSPIRE SUB GRID SPLIT */
+    .shroudspire-split {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+
+    .shroud-card {
+      background: rgba(14, 9, 20, 0.6);
+      border: 1px solid rgba(139, 92, 246, 0.15);
+      padding: 15px;
+      border-radius: 4px;
+    }
+
+    /* HUB ROUTER FOOTER BUTTONS */
+    .button-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 40px auto 20px;
+    }    
+    
+    .magic-link {
+      display: inline-block;
+      padding: 10px 18px;
+      border-radius: 4px;
+      border: 1px solid rgba(176,137,12,0.5);
+      background: #301438;
+      color: #ffbe00;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.2s ease;
+    }    
+    
+    .magic-link:hover {
+      background: #471952;
+      color: #fff;
+      box-shadow: 0 0 15px rgba(176, 137, 12, 0.4);
+    }   
+    
+    .site-footer {
+      margin-top: 60px;
+      padding: 35px 20px;
+      border-top: 1px solid var(--border);
+      background: #050308;
+      text-align: center;
+    }    
+    
+    .footer-whisper { font-size: 0.85em; opacity: 0.6; font-style: italic; margin-top: 6px; color: #8c7d9c; }
+
+    /* ── Lore Card Blueprints ── */
+    .lore-card {
+      background: linear-gradient(180deg, rgba(17, 24, 39, 0.7) 0%, rgba(11, 15, 26, 0.9) 100%);
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      text-align: left;
+      margin-bottom: 25px; 
+      cursor: pointer;
+    }
+
+    .lore-card h2 {
+      font-family: 'Cinzel', serif;
+      color: #ffd34d;
+      font-size: 1.6em;
+      margin-top: 0;
+      border-bottom: 1px solid #1e293b;
+      padding-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    /* ── Nebula Glow ── */
+    .nebula {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .nebula-1 {
+      width: 600px;
+      height: 600px;
+      background: #3b82f6;
+      top: -10%;
+      left: -5%;
+    }
+
+    .nebula-2 {
+      width: 500px;
+      height: 500px;
+      background: #a855f7;
+      top: 40%;
+      right: -10%;
+    }
+
+    .nebula-3 {
+      width: 450px;
+      height: 450px;
+      background: #10b981;
+      bottom: -5%;
+      left: 30%;
+    }
+
+    .lore-card.glowing {
+      border-color: #9bbcff; 
+      box-shadow: 0 0 30px rgba(155, 188, 255, 0.6), inset 0 0 15px rgba(155, 188, 255, 0.2);
+      transform: scale(1.01); 
+      transition: all 0.4s ease; 
+    }    
+  </style>
+</head>
+<body>
+
+  <div class="nebula nebula-1"></div>
+  <div class="nebula nebula-2"></div>
+  <div class="nebula nebula-3"></div>
+
+  <header>
+    <h1>Geography & The People</h1>
+    <p class="content-intro">Welcome to the Respite registry system. To map Atheria is to possess the mind of an historian, the need for order like an archivist, and the questioning wonder of a philosopher.</p>
+  </header>
+
+  <!-- UNIFIED REGISTRY NAVIGATION MENU -->
+  <nav class="civic-nav-menu">
+    <ul class="nav-inner">
+      <li><a href="https://themapmakersnotebooks.neocities.org/More-widgets/quiet-spoke-inn">Quiet Spoke Inn</a></li>
+      <li><a href="#" class="active-sector">📜 Map & Census</a></li>
+      <li><a href="https://themapmakersnotebooks.neocities.org/Atherian/atherian-courthouse-processing">The Courts</a></li>
+      <li><a href="https://themapmakersnotebooks.neocities.org/pantheons"> The Pantheon</a></li>
+      <li><a href="https://themapmakersnotebooks.neocities.org/Atherian/wellspring">The Wellspring</a></li>
+      <li><a href="https://themapmakersnotebooks.neocities.org/Atheria/port-hush#probability-anchor">Port Hush</a></li>
+      <li><a href="https://themapmakersnotebooks.neocities.org/Atherian/Hush-Grove-Selka%20">Hushgrove</a></li>
+      <li><a href="awares-night.html">Arbitrary Awares Recoginition Night</a></li>
+    </ul>
+  </nav>
+
+  <div class="dashboard-container">
+    
+    <!-- TOP STACK: THE FULL WIDTH INTERACTIVE MAP -->
+    <aside class="map-top-holder">
+      <div class="map" id="map">
+        <img id="mapImg" src="https://themapmakersnotebooks.neocities.org/AtheriaWorldMap.png" alt="The Great Tapestry of Atheria"/>  
+      </div>
+      
+      <div class="map-list">
+        <div class="lore-card" onclick="toggleGlow(this)">
+          <h2>Continental Navigation Nodes</h2>
+          <div class="links-grid">
+            <a href="#realm-astral-plains">🌙 Astral Plains</a>
+            <a href="#realm-shardborn">💎 Shardborn Territories</a>
+            <a href="#realm-auralith">🌘 Auralith Country</a>
+            <a href="#realm-twin-currents">🌊 Twin Currents</a>
+            <a href="#realm-rootwood">🍄 The Rootwood</a>
+            <a href="#realm-sunstone">☀️ Sunstone Dominion</a>
+            <a href="#realm-shroudspire">⛰️ Shroudspire Peaks</a>
+            <a href="#realm-the-respite">🏡 The Respite</a>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- BOTTOM STACK: DETAILED LORE REGISTRIES -->
+    <main class="content-column">
+      
+      <blockquote class="quote">
+        "We are all notes in the Song That Bent The World. We may be riding on different waves, waiting to collapse into each other, but we play the same music."
+      </blockquote>               
+
+      <!-- 🌙 THE ASTRAL PLAINS -->
+      <section id="realm-astral-plains" class="realm-container">
+        <div class="lore-card" onclick="toggleGlow(this)">
+          <div class="realm-header"><h2>The Astral Plains (Northwest)</h2></div>
+          <p><strong>Creator:</strong> Cross-ties Goddess of stars, dreams, and the astral world.</p>
+          <p><strong>The Caretakers of the Psyche:</strong> The Oneiroi are charged with the sacred duty of reading the cosmos, protecting the Astral world, and organizing specialized factions aligned with the cosmic Pillars. Their primary magical focuses encompass cosmic manipulation, dream walking, and astral charting.</p>
+          
+          <figure style="margin: 15px auto; max-width: 650px; width: 100%; display: block;"> 
+            <img src="https://themapmakersnotebooks.neocities.org/Maps/astral-plainsimage.png" alt="The Astral Plains" style="width: 100%; height: auto; border-radius: 6px;"> 
+            <figcaption style="font-size: 0.8rem; color: #8c7d9c; font-style: italic; text-align: center; margin-top: 5px;">The Astral Plains</figcaption>    
+          </figure>
+          
+          <a href="https://themapmakersnotebooks.neocities.org/More-widgets/Astral-Plains" class="magic-link">🌘 Astral Plains</a>
+        </div>
+      </section>
+
+      <!-- 💎 SHARDBORN TERRITORIES -->
+      <section id="realm-shardborn" class="realm-container">  
+        <div class="lore-card" onclick="toggleGlow(this)">    
+          <div class="realm-header"><h2>The Shardborn Territories (Far North)</h2></div>
+          <p><strong>Origin:</strong> Beings formed from leftover fragments of resonance from the gods. Born from geodes, they practice resonance weaving through prismatic light waves.</p>
+          <p><strong>Physiology & Society:</strong> Characterized by porcelain white or ashen skin with physical crystals embedded in their bodies that hum with strong emotion, alongside veins that glow with a faint geometric light. A divergent branch features charcoal-colored skin and small horns. Their cities are built directly inside giant crystal geodes, and they use readable sound tones instead of written language for history. Their magic can uniquely amplify the power of other races, risking internal fractures if overwhelmed.</p>
+          
+          <figure style="margin: 15px auto; max-width: 650px; width: 100%; display: block;"> 
+            <img src="https://themapmakersnotebooks.neocities.org/Maps/Shardborn-territories.png" alt="Shardborn Territories" style="width: 100%; height: auto; border-radius: 6px;"> 
+            <figcaption style="font-size: 0.8rem; color: #8c7d9c; font-style: italic; text-align: center; margin-top: 5px;">The Shardborn Territories (Far Northern Crescent)</figcaption>  
+          </figure>
+          <a href="https://themapmakersnotebooks.neocities.org/Atherian/Auralith" class="magic-link">🌘 Shardborn Territories</a>
+        </div>
+      </section>
+
+      <!-- 🌘 AURALITH -->
+      <section id="realm-auralith" class="realm-container">
+        <div class="lore-card" onclick="toggleGlow(this)">
+          <div class="realm-header"><h2>Auralith (Northeast)</h2></div>
+          <p><strong>Creator:</strong> Virelia, Goddess of Communication, Knowledge, and Wisdom.</p>
+          <p><strong>The Resonant Philosophers:</strong> A land of twilight forests and black-sand seas experiencing the copper-blue dusk known as Vespertide. Humanoids here are tall and willow-slim with storm-slate or deep indigo skin. Masters of Resonance Weaving and sonomancy, their golden bioluminescent lumen-tracery veins and tuning-notched ears serve as absolute conduits to perceive and manipulate ambient vibrations. Governed by the Luminous Concord.</p>
+          
+          <figure style="margin: 15px auto; max-width: 650px; width: 100%; display: block;"> 
+            <img src="https://themapmakersnotebooks.neocities.org/Maps/Auraliths.png" alt="Auralith" style="width: 100%; height: auto; border-radius: 6px;"> 
+            <figcaption style="font-size: 0.8rem; color: #8c7d9c; font-style: italic; text-align: center; margin-top: 5px;">Auralith</figcaption>    
+          </figure>
+          <a href="https://themapmakersnotebooks.neocities.org/Atherian/Auralith" class="magic-link">🌘 Auralith</a>
+        </div>
+      </section>
+
+      <!-- 🌊 TWIN CURRENTS -->
+      <section id="realm-twin-currents" class="realm-container">
+        <div class="lore-card" onclick="toggleGlow(this)">
+          <div class="realm-header"><h2>The Twin Currents Archipelago (Southeast)</h2></div>
+          <p><strong>Creators:</strong> Syric (God of Fate) and Aria (Goddess of Luck).</p>
+          <p><strong>The Weavers of Chance:</strong> A fluid maritime chain of islands that perceives the universe as a Great Tapestry woven from the fixed warp threads of fate and the colorful weft threads of choice and chance. Their capital, Port Probability, fluidly adapts its layout to changing tides. Their probability magic ranges from immediate luck nudging to advanced Pathweaving.</p>
+          
+          <figure style="margin: 15px auto; max-width: 650px; width: 100%; display: block;"> 
+            <img src="https://themapmakersnotebooks.neocities.org/Maps/twin-currents.png" alt="Twin Currents" style="width: 100%; height: auto; border-radius: 6px;"> 
+            <figcaption style="font-size: 0.8rem; color: #8c7d9c; font-style: italic; text-align: center; margin-top: 5px;">The Twin Currents</figcaption>    
+          </figure>
+        <a href="https://themapmakersnotebooks.neocities.org/Atherian/unseeing-sighted" class="magic-link">The Twin Currents</a>
+      </section>  </div>
+
+      <!-- 🍄 THE ROOTWOOD -->
+      <section id="realm-rootwood" class="realm-container">
+        <div class="lore-card" onclick="toggleGlow(this)">
+          <div class="realm-header"><h2>The Rootwood (Southwest)</h2></div>
+          <p><strong>Creator:</strong> Sylvara, Goddess of all things that grow, renewal, and rebirth ("Finest Blooms").</p>
+          <p><strong>The Guardians of Vitality:</strong> Slender, Fae-like beings with pale lavender skin, bioluminescent spots, and delicate, translucent insectoid wings. Their values center on grace and environmental renewal. Their architecture is grown and cultivated into giant Mushroom Houses, clustered in cities like Sporehaven. Their defensive military force, the Thallus Guard, utilizes non-lethal spores to safely disable invaders.</p>
+           
+          <figure style="margin: 15px auto; max-width: 650px; width: 100%; display: block;"> 
+            <img src="https://themapmakersnotebooks.neocities.org/Maps/Rootwood-forest.png" alt="The Rootwood" style="width: 100%; height: auto; border-radius: 6px;"> 
+            <figcaption style="font-size: 0.8rem; color: #8c7d9c; font-style: italic; text-align: center; margin-top: 5px;">The Rootwood</figcaption>    
+          </figure>
+        <a href="https://themapmakersnotebooks.neocities.org/Atherian/unseeing-sighted" class="magic-link">Rootwood</a>
+      </section>  </div>
+
+      <!-- ☀️ SUNSTONE -->
+      <section id="realm-sunstone" class="realm-container">
+        <div class="lore-card" onclick="toggleGlow(this)">
+          <div class="realm-header"><h2>Sunstone Dominion (Central-West)</h2></div>
+          <p><strong>Creator:</strong> Alezion, God of Balance, Justice, and Equality.</p>
+          <p><strong>The Architects of Balance:</strong> A statuesque and graceful realm of floating islands carved from luminous pale blue stone. Humanoids boast pearlescent skin with eyes radiating inner light and embedded Living Light Crystals. They specialize in the trade of magical Skyglass, Sky-Fishing the cloud seas, and command magic like Cloudwalk, Cloudspeech, and Sun's Spark.</p>
+           
+          <figure style="margin: 15px auto; max-width: 650px; width: 100%; display: block;"> 
+            <img src="https://themapmakersnotebooks.neocities.org/Maps/sunstonemap.png" alt="Sunstone Dominion" style="width: 100%; height: auto; border-radius: 6px;"> 
+            <figcaption style="font-size: 0.8rem; color: #8c7d9c; font-style: italic; text-align: center; margin-top: 5px;">Sunstone</figcaption>    
+          </figure>        
+        <a href="https://themapmakersnotebooks.neocities.org/Atherian/unseeing-sighted" class="magic-link">Sunstone</a>
+      </section></div>
+
+      <!-- ⛰️ SHROUDSPIRE PEAKS -->
+      <section id="realm-shroudspire" class="realm-container">
+        <div class="lore-card" onclick="toggleGlow(this)">
+          <div class="realm-header"><h2>Shroudspire Peaks & Factions</h2></div>
+          <p>Hovering precariously above the Oxymere, these massive peaks are knit together by dense forest canopies.</p>
+          
+          <div class="callout">
+            <h3>⚠️ Balanced Co-Equal Factional Notice</h3>
+            <p>Eighteen years ago, the Shadow Clan split into two completely separate, equal cultures following a core philosophical dispute. They operate independently as non-subordinate entities.</p>
+          </div>
+
+          <div class="shroudspire-split">
+            <div class="shroud-card">
+              <h3 style="color: #fcc565; font-size: 1.15rem; margin-bottom: 5px;">The Silent Weavers</h3>
+              <p style="font-size: 0.85rem;">An introverted, neutral philosophical faction dedicated to quiet contemplation, operating Black Lantern University. They interact with shadows as companions.</p>
+            </div>
+            <div class="shroud-card">
+              <h3 style="color: #fca5a5; font-size: 1.15rem; margin-bottom: 5px;">The Blackwake Couriers</h3>
+              <p style="font-size: 0.85rem;">Pragmatic and hardened shadow manipulators. They command shadow transportation networks while strictly avoiding the sun.</p>
+            </div>
+          </div>
+
+          <figure style="margin: 20px auto 0 auto; max-width: 650px; width: 100%; display: block;"> 
+            <img src="https://themapmakersnotebooks.neocities.org/Maps/Shroudspire-isles.png" alt="Shroudspire" style="width: 100%; height: auto; border-radius: 6px;"> 
+            <figcaption style="font-size: 0.8rem; color: #8c7d9c; font-style: italic; text-align: center; margin-top: 5px;">Shroudspire</figcaption>    
+          </figure>
+        <a href="https://themapmakersnotebooks.neocities.org/Atherian/unseeing-sighted" class="magic-link">Shroudspire</a>
+      </section></div>
+
+      <!-- 🏡 THE RESPITE -->
+      <section id="realm-the-respite" class="realm-container">
+        <div class="lore-card" onclick="toggleGlow(this)">
+          <div class="realm-header"><h2>The Respite & Songfields</h2></div>
+          <p><strong>The Neutral Zone:</strong> The crossroads created for the drafting of the Treaty of Ink and Men, housing major guildhalls, the Resonance Accord, and Gendarme HQ.</p>
+          <p><strong>The Irisireph:</strong> Ethereal tuners born directly of Echorin's essence who command specialized music and vibration magic to serve as baseline structural tuners.</p>
+          <p><strong>The Unseeing:</strong> Formerly known as the Sighted Blood. Stripped of natural sight by the gods, they adapted beautifully to navigate via tactical vibration and absorb resonance on their own terms.</p>
+          
+          <figure style="margin: 15px auto; max-width: 650px; width: 100%; display: block;"> 
+            <img src="https://themapmakersnotebooks.neocities.org/Icons-and-photos%20/Guide-AtHeart-Heart.png" alt="The Respite" style="width: 100%; height: auto; border-radius: 6px;"> 
+            <figcaption style="font-size: 0.8rem; color: #8c7d9c; font-style: italic; text-align: center; margin-top: 5px;">The Respite: Neutral Zone</figcaption>    
+          </figure>
+          
+          <figure style="margin: 15px auto; max-width: 650px; width: 100%; display: block;"> 
+            <img src="https://themapmakersnotebooks.neocities.org/Pics/Atherian-elaren.png" alt="The Elaren Market" style="width: 100%; height: auto; border-radius: 6px;"> 
+            <figcaption style="font-size: 0.8rem; color: #8c7d9c; font-style: italic; text-align: center; margin-top: 5px;">The Elaren Market</figcaption>    
+          </figure>
+          
+          <h2 style="font-family: 'Cinzel', serif; color: var(--gold-glow); font-size: 1.4rem; text-align: center; margin: 20px 0 10px 0;">Visit The Elaren Market</h2>
+         
+          <iframe src="https://themapmakersnotebooks.neocities.org/Elarenmarket" style="width: 100%; max-width: 620px; height: 460px; border: none; overflow: hidden; display: block; margin: 0 auto; background: transparent;"></iframe>
+        </div>
+      </section>
+      
+    </main>
+  </div>
+
+  <!-- ROUTING UTILITY ROW -->
+  <div class="button-row">
+    <a href="https://themapmakersnotebooks.neocities.org/Atherian/unseeing-sighted" class="magic-link">The Unseeing</a>
+    <a href="https://themapmakersnotebooks.neocities.org/drriftlight-ferry" class="magic-link">The Driftlight Ferry</a>
+    <a href="https://themapmakersnotebooks.neocities.org/Atheria/Compass-way" class="magic-link">Compass Way</a>
+    <a href="https://themapmakersnotebooks.neocities.org/Atherian/scriptorium-history" class="magic-link">Scriptorium of Historical Records & Curiousities</a>
+  </div>
+
+  <footer class="site-footer">
+    <p>The River Remembers What Humanity Forgot</p>
+    <p class="footer-whisper"><em>(Lord Bailiff lies heavily across the fresh ink of the registry sheets, purring at a low frequency to absorb the ambient stress of the tracking clerks.)</em></p>
+  </footer>
+
+  <script>
+  const PLACES = [
+    { id: "astral-plains", name: "The Astral Plains", desc: "Sky-islands and starlit dream-routes.", x: 23, y: 22 },
+    { id: "shardborn", name: "Shardborn Territories", desc: "Home of the Shock-Tuners.", x: 55, y: 20 },
+    { id: "auralith", name: "Auralith (The Core)", desc: "Central hub of the Luminous Collegium.", x: 67, y: 33 },
+    { id: "twin-currents", name: "Twin Currents", desc: "The maritime trade lanes housing the Deepbell Chamber.", x: 65, y: 62 },
+    { id: "rootwood", name: "The Rootwood", desc: "The home of the Mycelian Spore-Vanguard.", x: 54, y: 86 },
+    { id: "sunstone", name: "Sunstone", desc: "The University of the Unspoken Word.", x: 26, y: 60 },
+    { id: "shroudspire", name: "Shroudspire Peaks", desc: "The craggy floating home of the Blackwake Clan.", x: 84, y: 38 },
+    { id: "the-respite", name: "The Respite", desc: "The neutral zone created for the drafting of the Treaty of Ink and Men.", x: 45, y: 40 }
+  ];
+  
+  const mapEl = document.getElementById("map");
+  
+  function closeAll(){
+    mapEl.querySelectorAll(".card").forEach(card => card.style.display = "none");
+    document.querySelectorAll(".realm-container").forEach(box => box.classList.remove("highlighted-node"));
+  }
+
+  function openCard(id){
+    closeAll();
+    const card = document.getElementById("card-" + id);
+    if(card) card.style.display = "block";
+    
+    const syncProfile = document.getElementById("realm-" + id);
+    if(syncProfile) syncProfile.classList.add("highlighted-node");
+  }
+
+  PLACES.forEach(place => {
+    const pin = document.createElement("div");
+    pin.className = "pin";
+    pin.style.left = place.x + "%";
+    pin.style.top = place.y + "%";
+
+    const card = document.createElement("div");
+    card.className = "card";
+    card.id = "card-" + place.id;
+    card.style.left = place.x + "%";
+    card.style.top = place.y + "%";
+
+    card.innerHTML = `
+      <h3>${place.name}</h3>
+      <p>${place.desc}</p>
+      <div class="actions">
+        <a href="#realm-${place.id}">Board Carriage &rarr;</a>
+        <button type="button" data-close>Dismiss</button>
+      </div>
+    `;
+
+    pin.addEventListener("click", event => {
+      event.stopPropagation();
+      openCard(place.id);
+    });
+
+    card.addEventListener("click", event => {
+      event.stopPropagation();
+      if (event.target.matches("button[data-close]")) closeAll();
+    });
+
+    mapEl.appendChild(pin);
+    mapEl.appendChild(card);
+  });
+
+  document.addEventListener("click", closeAll);
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") closeAll();
+  });
+
+  function toggleGlow(cardElement) {
+    cardElement.classList.toggle('glowing');
+  }
+  </script>
+<script data-goatcounter="https://mapmakersnotebooks.goatcounter.com/count"async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
