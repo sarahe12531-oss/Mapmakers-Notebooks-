@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Astrology & Magic</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600&display=swap" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Instrument+Serif&family=Libre+Baskerville:ital,wght@0,400..700;1,400..700&family=Luxurious+Roman&family=Uncial+Antiqua&family=Viaoda+Libre&display=swap');
+
+
+:root {
+  --bg: #0b1020;
+  --text: #AEAEC4;
+  --muted: #aab;
+  --gold: #F4D100;
+  --gold-glow: #facc6b;  
+  --background-deep: #070c24;
+  --background-middle: #101748;
+  --background-glow: #281b58;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #000A38, #241636);
+  color: var(--text);
+  font-family: 'Spectral', serif;
+  text-align: left;
+  padding: 60px 20px;
+  overflow-x: hidden;
+  font-size: 1.1rem;  
+  line-height: 1.3;
+  letter-spacing: 1px;
+}
+
+@font-face {
+  font-family: 'Nightmare Gothic';
+  src: url('Nightmare-Gothic.ttf') format('truetype');
+}
+
+#starfield {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+ main p-1 {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 0, auto;
+  text-align: center; 
+  font-style: normal;
+  line-height: 1.3;
+  text-shadow: -1px, -1px 0 #000,1px -1px 0 #000,1px  1px 0 #000,1px 1px 0 #000;
+}
+
+h1 {
+  font-family: 'Nightmare Gothic', serif;
+  font-size: 3.0em;
+  text-shadow: 0 0 10px #040041;
+  text-align: center; 
+  color: #AEAEC4;
+  filter: drop-shadow(0 0 10px #90FFFA);
+  font-style: normal;
+}
+
+/* ── Realm Navigation Portals ── */
+.navigation-links {
+  margin-top: 50px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  filter: drop-shadow(0 0 10px #2F1357);
+}
+
+.button, .back {
+  display: inline-block;
+  padding: 14px 26px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #E4FAFF;
+  border: 0.95px solid rgba(157, 132, 199, .35);
+  background: #1A082A;
+  transition: .3s ease;
+  font-size: 12px;
+  font-family: 'Spectral',serif;
+  filter: drop-shadow(0 0 2px #00FFF3);
+}
+
+.button:hover, .back:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 18px rgba(157, 132, 199, .25);
+  background: rgba(45, 35, 60, .6);
+  color: #ffffff;
+}
+
+/* ── Lore Card Blueprints ── */
+.lore-card {
+  background: linear-gradient(180deg, rgba(17, 24, 39, 0.45) 0%, rgba(11, 15, 26, 0.9) 100%);
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  text-align: left;
+  margin:0 auto;
+  max-width: 770px; /* ADD THIS */
+  margin: 20px auto;
+}
+
+.lore-card h2 {
+  font-family: 'Nightmare Gothic', serif;
+  color: #FFD400;
+  font-size: 1.4em;
+  margin-top: 10px;
+  border-bottom: 1px solid #1e293b;
+  padding-bottom: 10px;
+  letter-spacing: 1px;
+  text-align: center; 
+  text-shadow: 0 0 10px #5F6C7E;
+}
+
+/* ── Nebula Glow ── */
+.nebula {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.nebula-1 {
+  width: 600px;
+  height: 600px;
+  background: #3b82f6;
+  top: -10%;
+  left: -5%;
+}
+
+.nebula-2 {
+  width: 550px;
+  height: 550px;
+  background: #a855f7;
+  top: 40%;
+  right: -10%;
+}
+
+.nebula-3 {
+  width: 450px;
+  height: 450px;
+  background: #10b981;
+  bottom: -5%;
+  left: 30%;
+}
+
+.lore-card.glowing {
+  border-color: #5A00B5;
+  box-shadow: 0 0 20px rgba(155, 188, 255, 0.6), inset 0 0 15px rgba(155, 188, 255, 0.2);
+  transform: scale(1.02);
+  transition: all 0.4s ease;
+}
+
+.scroll-title {
+  font-family: 'Nightmare Gothic', serif;
+  font-size: 2.2rem;
+  color: #00BEC5;
+  text-align: center;
+}
+
+.scroll-subtitle {
+  text-align: center;
+  font-style: italic;
+  color: #A47600;
+  margin-bottom: 40px;
+  font-size: 1.2rem;
+}
+
+.prose-text p-2 {
+  margin-bottom: 2rem;
+  text-indent: 10px;
+  font-size: 1.6em;
+  text-align: left; 
+  text-shadow: 0 0 10px #5F6C7E;
+  font-style: normal;
+  line-height: 1.4;
+}
+/* ── THE CLEAN LORE SCROLL BOX ── */
+.scroll-container {
+    max-width: 770px;
+    width: 100%;
+    background: rgba(22, 13, 41, 0.4);
+    padding: 30px 20px;
+    border-left: 1px dashed rgba(250, 204, 107, 0.2);
+    border-right: 1px dashed rgba(250, 204, 107, 0.2);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+    margin: 20px auto;
+    
+    /* THE MAGIC FIX: This forces a clean, smooth vertical scrollbar */
+    max-height: 500px;
+    overflow-y: auto !important; 
+    overflow-x: hidden;
+}
+
+/* ── CUSTOM ACCORDION STYLING ── */
+.custom-dropdown {
+width: 100%;
+max-width: 770px;
+margin:20px auto; padding:10px;
+/* FIX: The 0.75 means 75% background transparency. Text stays 100% solid! */
+background:linear-gradient(180deg, rgba(17, 24, 39, 0.75) 0%, rgba(11, 15, 26, 0.9) 100%); !important; 
+border: 1px solid rgba(87, 75, 98, 0.4) !important; /* Softened border */
+border-radius: 8px; overflow: hidden;
+backdrop-filter: blur(6px); /* Optional: Gives a frosted glass effect over your stars! */
+border-color: #38bdf8;
+box-shadow: 0 0 15px rgba(155, 188, 255, 0.6), inset 0 0 15px rgba(155, 188, 255, 0.2);
+}
+.custom-dropdown summary {
+    font-family: 'Nightmare Gothic', serif;
+    color: #CCA926; /* Your gold color */
+    font-size: 1.4rem;
+    padding: 12px;
+    cursor: pointer;
+    outline: none;
+}
+
+/* This fixes the broken p-3 and p-2 selectors so paragraphs actually display */
+.custom-dropdown p {
+    font-family: 'Instrument Serif', serif;
+    color: #BDD3D4; /* Light starlight white so you can actually read it! */
+    font-size: 1.2rem;
+    line-height: 1.6;
+    padding: 15px 15px;
+    margin: 10px;
+}
+
+.dropdown summary {
+    font-family: 'Nightmare Gothic', serif;
+    color: #CCA926; /* Your gold color */
+    font-size: 1.4rem;
+    padding: 12px;
+    cursor: pointer;
+    outline: none;
+}
+.dropdown p {
+    font-family: 'Instrument Serif', serif;
+    color: #BDD3D4; /* Light starlight white so you can actually read it! */
+    font-size: 1.2rem;
+    line-height: 1.6;
+    padding: 15px 15px;
+    margin: 10px;
+}
+
+.return-link {
+  display: block;
+  text-align: center;
+  margin-top: 60px;
+  color: #bae6fd;
+  text-decoration: none;
+  font-style: italic;
+}
+.return-link:hover {
+  color: #facc6b;
+  text-shadow: 0 0 8px #facc6b;
+}
+
+.section-divider {
+  text-align: center;
+  margin: 10px auto;
+  color: #FFC225;
+  opacity: 1;
+  letter-spacing: 8px;
+  font-size: 1.2rem;
+  text-shadow: 0 0 10px #00626C;
+  filter: drop-shadow(0 0 10px #38A9C5);
+}
+
+b {
+  color: #00BEC5;
+}
+
+/* FIXED: Target both h2 tags and scroll titles cleanly */
+h2, .scroll-title {
+  color: #E9C700 !important;
+  font-family: 'Nightmare Gothic', serif !important;
+  font-size: 2.0rem !important;
+  font-weight: bold;
+  text-align: center !important;
+}
+    .moon-nav-wrapper {
+      position: fixed;
+      top: 25px;
+      right: 25px;
+      z-index: 1000;
+    }
+    .moon-trigger {
+      background: none;
+      border: none;
+      font-size: 2.2rem;
+      cursor: pointer;
+      outline: none;
+      user-select: none;
+      filter: drop-shadow(0 0 10px var(--glow-silver));
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .celestial-menu {
+      position: fixed;
+      top: 85px;
+      right: 25px;
+      width: 260px;
+      background: rgba(10, 11, 20, 0.98);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-cyan);
+      border-radius: 4px;
+      padding: 25px 20px;
+      box-sizing: border-box;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
+      display: none;
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .celestial-menu.is-open {
+      display: block !important;
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+      pointer-events: auto !important;
+    }
+    .moon-trigger.is-active {
+      transform: rotate(360deg);
+    }
+    .menu-header {
+font-family: 'Nightmare Gothic', serif;     
+font-size: 0.85rem;      
+letter-spacing: 2px;      
+color: var(--text-muted);    
+text-align: center;    
+border-bottom: 1px dotted var(--border-cyan);    
+padding-bottom: 8px;      
+margin-bottom: 15px;
+    }
+    .menu-links { list-style: none; padding: 0; margin: 0; }
+    .menu-links li { margin-bottom: 12px; }
+    .menu-links a {
+      display: block;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+    }
+    .menu-links a:hover { color: var(--glow-amethyst); padding-left: 5px; }
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 6, 11, 0.6);
+      display: none;
+      z-index: 998;
+    }
+    .menu-overlay.is-open { display: block !important; }
+    
+  .text-outline {
+  text-shadow:
+    -1px -1px 0 #000,
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
+}
+  /* Lord Bailiff Footer */
+        .bailiff-desk {
+            border-top: 1px double var(--border-glow);
+            padding-top: 2rem;
+            margin-top: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .bailiff-avatar {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+        }
+
+        .cat-icon {
+            font-size: 2.2rem;
+            filter: drop-shadow(0 0 8px rgba(167, 139, 250, 0.3));
+            transition: transform 0.5s ease;
+        }
+
+        .bailiff-avatar:hover .cat-icon {
+            transform: rotate(-10deg) scale(1.1);
+        }
+
+        .purr-meter {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .purr-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-gold);
+        }
+
+        .purr-sub {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-family: monospace;
+        }
+      /* 2) feature content + smaller side content */
+.feature-layout{
+  padding:18px;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius:16px;
+  background:rgba(246,241,231,.05);
+  color:#f6f1e7;
+  width:100%;
+  max-width:770px;
+  margin: 20px auto;
+}
+{ display: grid; grid-template-columns: 1.4fr .8fr; gap:20px; }
+.card-label { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: #4dd8c8; }
+.card h3 { margin: 7px 0; font-size: 24px; }
+.card p { font-size: 13px; opacity: .8; }
+.card a { color: #e9b44c; font-size: 12px; }
+
+/* Gold Starlight Glow */
+.glow-border-gold {
+    border: 1px solid var(--gold-glow) !important;border-radius: 8px;
+    box-shadow: 0 0 15px rgba(250, 204, 107, 0.5), inset 0 0 10px rgba(250, 204, 107, 0.1) !important;
+}
+/* =========================================================
+   NOTION-STYLE PAGE COVER / HERO IMAGE
+   ========================================================= */
+
+.page-cover {
+  position: relative;
+
+  width: 100%;
+  max-width: 1050px;
+  height: 540px;
+
+  margin: 0 auto 40px;
+
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(144, 255, 250, 0.18);
+  box-shadow:
+    0 15px 45px rgba(0, 0, 0, 0.55),
+    0 0 25px rgba(56, 189, 248, 0.12);
+}
+
+.page-cover-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  transition:
+    transform 0.8s ease,
+    filter 0.8s ease;
+}
+
+/* Darkens the bottom slightly so it blends into Atheria */
+.page-cover-shade {
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      to bottom,
+      transparent 45%,
+      rgba(0, 10, 56, 0.25) 70%,
+      rgba(11, 16, 32, 0.8) 100%
+    );
+}
+
+/* Tiny archival label */
+.page-cover-label {
+  position: absolute;
+  bottom: 1px;
+  left: 0;
+  right: 0;
+
+  text-align: center;
+
+  font-family: 'Spectral', serif;
+  font-size: 0.7rem;
+  letter-spacing: 4px;
+
+  color: rgba(228, 250, 255, 0.8);
+
+  text-shadow:
+    0 0 8px #000,
+    0 0 12px rgba(0, 255, 243, 0.4);
+
+  pointer-events: none;
+}
+
+/* Very subtle movement */
+.page-cover:hover .page-cover-image {
+  transform: scale(1.025);
+  filter: brightness(1.08);
+}
+
+/* Phone layout */
+@media (max-width: 600px) {
+  .page-cover {
+    height: 210px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+  }
+
+  .page-cover-label {
+    bottom: 12px;
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+  }
+}
+.text-shimmer {
+  color: transparent;
+  background: linear-gradient(
+    90deg,
+    #73f0fd 0%,
+    #73f0fd 35%,
+    #ffffff 50%,
+    #facc6b 60%,
+    #73f0fd 75%,
+    #73f0fd 100%
+  );
+
+  background-size: 250% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: textShimmer 5s linear infinite;
+}
+
+@keyframes textShimmer {
+  from {
+    background-position: 200% center;
+  }
+
+  to {
+    background-position: -50% center;
+  }
+}
+{
+  position: relative;
+  overflow: hidden;
+}
+/* =========================================================
+   #17 — MAGIC DUST
+   ========================================================= */
+
+.magic-dust {
+  position: relative;
+  overflow: hidden;
+}
+
+.dust-content {
+  position: relative;
+  z-index: 2;
+}
+
+.dust {
+  position: absolute;
+
+  bottom: -10px;
+
+  width: 4px;
+  height: 4px;
+
+  border-radius: 50%;
+
+  background: #73f0fd;
+
+  box-shadow:
+    0 0 5px #73f0fd,
+    0 0 12px #73f0fd;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  animation: dustRise 5s linear infinite;
+}
+
+.d1 {
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.d2 {
+  left: 25%;
+  animation-delay: 1.5s;
+}
+
+.d3 {
+  left: 42%;
+  animation-delay: 0.7s;
+}
+
+.d4 {
+  left: 60%;
+  animation-delay: 2.2s;
+}
+
+.d5 {
+  left: 78%;
+  animation-delay: 1s;
+}
+
+.d6 {
+  left: 90%;
+  animation-delay: 3s;
+}
+
+@keyframes dustRise {
+  0% {
+    transform:
+      translateY(0)
+      translateX(0)
+      scale(0.5);
+
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 0.9;
+  }
+
+  60% {
+    transform:
+      translateY(-120px)
+      translateX(12px)
+      scale(1);
+
+    opacity: 0.7;
+  }
+
+  100% {
+    transform:
+      translateY(-240px)
+      translateX(-8px)
+      scale(0);
+
+    opacity: 0;
+  }
+}
+/* =========================================================
+   #31 — IMAGE + PULL QUOTE BREAKER
+   ========================================================= */
+
+.lore-breaker {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+
+  width: min(950px, calc(100% - 40px));
+  min-height: 330px;
+
+  margin: 70px auto;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(15, 23, 42, 0.88),
+      rgba(24, 15, 42, 0.9)
+    );
+
+  border: 1px solid rgba(115, 240, 253, 0.18);
+  border-radius: 14px;
+
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.45),
+    0 0 25px rgba(56, 189, 248, 0.08);
+}
+
+.lore-breaker-image {
+  position: relative;
+  min-height: 280px;
+  overflow: hidden;
+}
+
+.lore-breaker-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent 55%,
+      rgba(15, 23, 42, 0.75) 100%
+    );
+
+  pointer-events: none;
+}
+
+.lore-breaker-image img {
+  display: block;
+ width: 580px;
+  height: 100%;
+  min-height: 280px;
+
+  object-fit: cover;
+
+  transition: transform 1.2s ease;
+}
+
+.lore-breaker:hover .lore-breaker-image img {
+  transform: scale(1.035);
+}
+
+.lore-breaker-quote {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 45px 40px;
+}
+
+.quote-mark {
+  position: absolute;
+  top: 15px;
+  left: 22px;
+
+  color: rgba(115, 240, 253, 0.15);
+
+  font-family: Georgia, serif;
+  font-size: 8rem;
+  line-height: 1;
+
+  pointer-events: none;
+}
+
+.lore-breaker blockquote {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: #e2e8f0;
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  line-height: 1.35;
+  font-style: italic;
+}
+
+.quote-divider {
+  width: 50px;
+  height: 1px;
+
+  margin: 25px 0 15px;
+
+  background: #73f0fd;
+
+  box-shadow: 0 0 8px rgba(115, 240, 253, 0.8);
+}
+
+.lore-breaker cite {
+  color: #facc6b;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  font-style: italics;
+  text-transform: uppercase;
+}
+
+@media (max-width: 700px) {
+  .lore-breaker {
+    grid-template-columns: 1fr;
+    width: min(100% - 24px, 950px);
+  }
+
+  .lore-breaker-image {
+    min-height: 280px;
+  }
+
+  .lore-breaker-image img {
+    min-height: 280px;
+  }
+
+  .lore-breaker-image::after {
+    background:
+      linear-gradient(
+        180deg,
+        transparent 60%,
+        rgba(15, 23, 42, 0.8) 100%
+      );
+  }
+
+  .lore-breaker-quote {
+    padding: 35px 25px 40px;
+  }
+}
+
+.lore-card {
+  background: linear-gradient(180deg, rgba(17, 24, 39, 0.45) 0%, rgba(11, 15, 26, 0.9) 100%);
+  border: 1px solid #1e293b;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  text-align: left;
+  max-width: 770px; /* ADD THIS */
+  margin: 20px auto;
+}
+.soft-shadow {
+  box-shadow: 0 4px 6px 1px rgba(0, 0, 0, 0.6),0 4px 4px 8px rgba(0, 0, 0, 0.08);
+}
+.resonant-divider {
+  width: min(500px, 80%);
+  height: 1px;
+  margin: 40px auto;
+  border: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #73f0fd,
+    #facc6b,
+    #73f0fd,
+    transparent
+  );
+  box-shadow: 0 0 8px rgba(115, 240, 253, 0.7);
+}
+.text-shimmer {
+  color: transparent;
+  background: linear-gradient(
+    90deg,
+    #73f0fd 0%,
+    #73f0fd 35%,
+    #ffffff 50%,
+    #facc6b 60%,
+    #73f0fd 75%, #73f0fd 100%  ); background-size: 250% auto; background-clip: text;
+  -webkit-background-clip: text; animation: textShimmer 5s linear infinite;
+}
+@keyframes textShimmer {
+  from {
+    background-position: 200% center;
+  }
+  to {
+    background-position: -50% center;
+  }
+}
+.image-container {
+  text-align: center;
+}
+
+.glow-all {
+  Text-shadow: 0 0 4px rgba(210,180,255,0.55),0 0 10px rgba(180,120,255,0.35);
+  Animation: glowPulse 6s ease-in-out infinite;
+}
+@keyframes glowPulse {
+  0% { text-shadow: 0 0 4px rgba(210,180,255,0.4); }
+  50% { text-shadow: 0 0 10px rgba(210,180,255,0.8); }
+  100% { text-shadow: 0 0 4px rgba(210,180,255,0.4); }
+}
+</style>
+
+</head>
+<body>
+
+<div class="nebula nebula-1"></div>
+<div class="nebula nebula-2"></div>
+<div class="nebula nebula-3"></div>
+<canvas id="starfield"></canvas>
+
+<div class="magic-dust">
+
+  <span class="dust d1"></span>
+  <span class="dust d2"></span>
+  <span class="dust d3"></span>
+  <span class="dust d4"></span>
+  <span class="dust d5"></span>
+  <span class="dust d6"></span>
+
+  <div class="dust-content">
+    
+  
+<div class="moon-nav-wrapper">
+    <button class="moon-trigger" id="moonBtn" onclick="toggleCelestialMenu()">🌙</button>
+    <nav class="celestial-menu" id="celestialMenu">
+      <div class="menu-header"> A "Navigation" Menu</div>
+      <ul class="menu-links">
+        <li><a href="index.html" onclick="toggleCelestialMenu()">Mapmaker's Landing 🦆</a></li>
+        <li><a href="https://themapmakersnotebooks.neocities.org/Web-Pages/grand-map">The Grand Map</a></li>
+        <li><a href="ramblings.html">Philosophical Shit</a></li>
+<li><a href="https://themapmakersnotebooks.neocities.org/first-listener">First Listener</a></li>
+      </ul>
+    </nav>
+  </div>
+  
+  <!-- PAGE HERO / COVER IMAGE -->
+<div class="page-cover">
+<img src="https://themapmakersnotebooks.neocities.org/Pictures%20/mapmagic.jpeg" alt="Celestial representation of Resonant Harmonics" class="page-cover-image">
+  <div class="page-cover-shade"></div>
+  <div class="page-cover-label">
+    <span>✦ THE ATHERIAN ARCHIVES ✦</span>
+  </div>
+</div>
+  <h1>Resonant Harmonics:<br> The Physics of Giving a Shit</h1>
+<p style="font-size: 0.85em; font-style: italic; margin-bottom: 50px; text-align: center">⛧ In Atheria, magic is a collaborative acoustic act governed by the <b>Law of Mapping:</b><br> What is mapped becomes real; what is unmapped unravels. Those that map are bound to what they witness.<br> This is the physics of giving a shit. </p>
+<p style="font-size: 0.85em; font-style: italic; margin-bottom: 50px; text-align: center">
+Magic is a symphony you can hear, even after it ends.<br>
+  Magic is not casting spells. It's weaving resonance. Atherians call it:<br>
+<b>  ⛧ "Resonant Harmonics" ⛧</b>
+</p>
+<br>
+<!-- Birth of Resonance -->
+<div class="lore-card" onclick="toggleGlow(this)">
+  <h2>✨ Birth of Resonance ✨</h2>
+  <p class="text-outline">Atheria's magic system is called Resonant Harmonics. Magic is not created by mortals; it is woven by bringing one's own resonance into harmony with the living resonance of Atheria.<b> Every living thing carries a unique Core Note,</b> a resonance born from the Song That Bent the World and sustained through the Rootmother's living current (the unraveled Lysera). When a weaver crafts a weave, they do not create energy. They align their own resonance with Atheria's, shaping it into a weave through voice, intention, and timing. <br><br>
+
+  Resonance is the reason things are impactful, it is what tells the brain to form memories. It's the force that gives meaning to objects, events, or people. In Atheria, the ache of longing to be more was the first shape resonance could form. From that longing emerged <b> Lysera and Arenox. She was the first Light, </b> the outward expression of resonance, the impulse to reveal. She was the Singer of the song.<b> And he was the first Shadow, </b> the inward pull of resonance and the impulse to understand. He was the force that gave shape to her voice. And<b> Vaessa</b> was perhaps the most important of them all. She is the pulse that binds them together, the sheet music that makes it possible to sustain the Song.<br><br>
+
+<b>Vaessa</b> was not awakened, nor was she born. She was called forth from the ache of Arenox's first lament. She is empathy, the universe’s first desire to understand another. She is the bridge between Light and Shadow, between form and meaning. Vaessa is the reason resonance responds to emotion. She is the reason magic is personal. When the Titans and Vaessa joined their harmonics, it bound their resonance together. This anchored the Song That Bent the World, creating a resonance so powerful it bent the cosmos into shape.</p>
+
+  <div class="section-divider">⋆𖦹⋆✺···♫···✺···♫···✺ 𝄞 ✺···♫···✺···♫···✺ ⋆𖦹⋆</div>
+</div>
+<br>
+<!-- The Mirrors -->
+<div class="lore-card" onclick="toggleGlow(this)">
+  <h2>✨ The Mirrors ✨</h2>
+  <p class="text-outline"> Humanity was not always capable of matching to the frequencies of others. They were what history has called "the Hollow Ones." The early humans lacked the ability to empathize with one another. So Serisyn, Goddess of reflection and transformation, gave humanity two mirrors. The first mirror turned inward. It allowed a person to see themselves clearly, not as just a being of survival, but as a being with choices.<br><br>
+  The second mirror faced outward. It allowed them to see their own pain, desires, struggles, and most importantly, see themselves in another. It allowed humanity to understand Vaessa as the Titans did. Vaessa is the goddess of empathy and memory, but she cannot instill an inward reflection as Serisyn could. With the knowledge that pain, love, and human needs are universal, humans were transformed into resonant beings.</p>
+</div>
+<br>
+<!-- How to Weave -->
+<div class="lore-card" onclick="toggleGlow(this)">
+  <h2>✨ How to Weave ✨</h2>
+<div class="section-divider">☽⛧☾</div>
+  <p class="text-outline">In Atheria, mages do not cast "spells." They weave threads into resonance. <br>
+  Atherian bodies naturally produce a low vibrational frequency, creating their individual resonance. <br>
+  Atheria itself produces the key vibrational frequency a mage must be in tune with to produce magic.<br>
+Through the Rootmother River, one can more easily align with her frequency, making it easier to tune with the land. 
+Cleaning and caring for the River helps facilitate this alignment.
+If no litter is found, simply humming a tune in thanks will suffice.<br>
+To weave is to raise and align one's vibration with the world's until both resonate at the same frequency.
+<br><br>
+Once tuned, weaving requires three distinct components: <br>
+Emotion & Intention (The Source and Shape), <br>
+The Words (The Vehicle), and <br>
+Celestial Influence (The Weather)..</p>
+</div>
+<br>
+<!-- Cost of the Weave -->
+<div class="lore-card" onclick="toggleGlow(this)">
+  <h2>✨ Cost of the Weave ✨</h2>
+  <div class="section-divider">☽⛧☾</div>
+    <p class="text-outline"> Magic is paid for three times over. Once from the self with personal resonance. Secondly, you must tithe to Atheria for more complicated weaves. Thirdly and finally, depending on which planet or moon is dominant, the effect on resonance can vary. This isn't a cost you pay or tithe. It's what you endure naturally when weaving. It comes with the territory, so to speak, it's why it's called the weather. It fluctuates. Higher skilled mages or the finely tuned experience less negative effects because they use more personal resonance than planetary or terrestrial.</p>
+  <div class="section-divider">⋆𖦹⋆✺···♫···✺···♫···✺ 𝄞 ✺···♫···✺···♫···✺ ⋆𖦹⋆</div>
+</div>
+  <br>
+<section class="lore-breaker">
+  <div class="lore-breaker-image">
+    <img
+      src="https://themapmakersnotebooks.neocities.org/Photos/02lawmagic.png"
+      alt="Describe the image"
+    >
+  </div>
+
+  <div class="lore-breaker-quote">
+    <span class="quote-mark">“</span>
+
+    <blockquote>
+      Magic cannot be created from nothing. <br>
+      Atheria lends you resonance, she demands payment.
+    </blockquote>
+    <div class="quote-divider"></div>
+
+    <cite>— Atherian Law of Symmetric Return</cite>
+  </div>
+</section>
+  <br>
+<!-- Law of Conservation -->
+<div class="lore-card" onclick="toggleGlow(this)">
+  <h2>✨ The Law of Conservation or Symmetric Return ✨</h2>
+  <p class="text-outline">Magic cannot be created from nothing. A weave using single or few threads costs an insignificant amount. It only takes from self-made resonance. Weaves requiring many threads require Atheria to tune with, and require payment. Atheria is only lending the energy, not gifting it. It requires that resonance back. Restoration of resonance can be achieved via <b>tithing</b>. Tithes must be given within nine days of weaving. If you're a high-level or high-usage mage, you may consider keeping a list of tithes owed. Tithing can be accomplished by doing anything that replenishes Atheria.</p>
+  <p></p>
+  <div class="section-divider">☽⛧☾</div>
+   <p class="text-outline">
+    <b>Examples:</b><br>
+    • Planting trees, flowers, or resonant crops.<br>
+    • Picking up litter and recycling.<br>
+    • Publicly shouting sneers/demeaning things to litterers <br>
+        -(the creative ones get featured in the cafe).<br>
+    • Raising and adequately caring for animals.<br>
+    • Raising, say, a nice mallard. Yes, that's just delightful.
+  </p>
+</div>
+<div class="section-divider">☽⛧☾</div>
+<!-- Consequences Dropdown -->
+  <details class="custom-dropdown lore-card" onclick="toggleGlow(this)">
+    <summary>✨ Consequences for Missed Tithes & Scribe Notes ✨</summary>
+    <p class="text-outline">
+      <b>First Offense:</b>
+      Atheria Magical arrest (a binding of all personal magic where any attempt to cast causes weaves to backfire obnoxiously or violently depending on your intentions).<br>
+     <p><b>Regarding the Nine-Day Limit:</b><br>
+The origin of the nine-day tithing period remains unknown. <br>
+It was discovered through observation, not decided arbitrarily by men<br>
+In Atheria's 660-year history, there are only three accounts of what happens when tithes are not given by moonrise on the ninth day. Of the three recorded in the Spiral Ledger, they are all described vaguely but promise that all were deeply unpleasant days. <br>
+We prefer not to be the ones adding the fourth. Citizens contemplating deliberate experimentation are reminded that Phlegm Soupy Sam is merely a name. Pay your tithes.<br>
+Here at the Scriptorium of Historical Records & Courisities, we are working diligently to decipher and translate the full records, as they are of a language unknown to us or were recorded by scribes with terrible penmenship. Once that answer becomes clear to us, we will transcribe and release information as it becomes necessary for the public to know. We thank you for your patience and have left complimentary refreshments of filtered water (not off the farms, ours have lemons) and, Rasket cakes (yes the delicious coco and flambeezle berry puff pastries).</p>
+    
+      <p class="text-outline">
+      <b>Second Offense:</b><br>
+      The offender will be rendered luck-neutral for a period of 4 years, 5 months, and 3 days. You will experience no luck at all—everything has a 50% chance of happening. Things will never go arbitrarily in your favor, nor will you receive bad luck for activities like breaking a mirror, walking under a ladder, or saying a wish aloud. Stepping on cracks will not, in fact, break your mother's back.   </p>
+       <p class="text-outline">
+      <b>Third Offense:</b><br>
+      Permanent luck-neutrality, and the offender's name is permanently and legally changed to<b> Phlegm Soupy Sam</b> immediately. It's gross and gender-neutral.<br>
+      <b>The Birth Anniversary Clause:</b> If it is the culprit's birthday, renaming shall proceed as normal. Atheria doesn't forgive you, and neither do we.    </p>
+<br>
+	<details style="margin:0;width:730px;">
+    <summary>Addendums & Scribe Notes:</summary>
+    <p class="text-outline">
+      <b>Note 66a:</b><br>
+    Due to a surprising amount of complaints, the courts have agreed to add <i>Phlegm Soupy Thalnor</i>, <i>Mucous Melvin</i>, <i>Phlegm Soupy Vaelar</i>, <i>Phlegm Soupy Stephanie</i>, or <i>Moisty Moria</i>. Phlegm Soupy Sam will remain default. Changes are final and only made upon request via Form 402-B submitted within a fortnight.</p>
+      <p class="text-outline">
+      <b>Note 66b:</b><br>
+      Due to many attempts to hide, minimize, mumble, pretend it never happened, or otherwise keep their new name a secret, offenders must recite their new name with enough <b>“viscosity”</b> and <b>“harumph.”</b> If deemed insufficient, the Resonance Council will make you stand in a bucket of warm oatmeal while you repeat it until sufficient viscosity and harumph are achieved. </p>
+<p class="text-outline">
+<b>Note 66c:</b><br>
+We cannot believe we are having to commit such things to ink, yet we are imploring the public: Please, for the love of the divine, do not use one's own waste as fertilizer for tithing unless it is of the utmost and direst of needs. It's unbecoming of you, and worst of all, undignified to subject Atheria to it. It's akin to burning sheepskin! Since we cannot formally convict on these grounds, we have been forced to react drastically. From this day forward, tithing in this way will result in the permanent removal of birth anniversary celebration rights, open acknowledgments, office parties, loopholes, benefits, and any advantages whatsoever.<br>
+By Jeebus, conduct yourselves as if you still had dignity. 
+If we all pretend hard enough, we may just get our dignity back.<br>
+<b>Note 78d:</b><br>
+Due to much confusion of the public, the state wants it to be clear: raising a mallard is just an example. Tithing by raising animals is not limited to mallards. They provide no extra energy or resonance. They are simply delightful on their own. The High Shenanigan just really likes <i>mallards</i>. Please feel free to choose any animal to raise and care for that your heart desires. </p>
+<p><b>WARNING: The Offset Penalty:</b><br>
+Attempting to "offset" or transfer your resonant debt onto another practitioner or an innocent bystander is a severe breach of the Accord. Such actions result in an immediate <b>double-tithe penalty</b> levied against the offender. Atheria knows its creditors; the Registry does not permit fraudulent claims of "Creditor of Fate" status.</p>
+  </details>  
+  </details>
+ <div class="section-divider">☽⛧☾</div>
+<!-- Scroll Container: Formula of Magic -->
+<div class="scroll-container">
+<h2 class="scroll-title text-align: center;">✨ How to Weave ✨</h2>
+  <div class="scroll-subtitle">The Formula of Magic</div>
+  <div class="prose-text">
+<p class="drop-cap-para">In Atheria, a weave is the careful alignment of frequencies, rather than a spontaneous burst of power. The spoken word is the easiest way to create the resonance needed to weave. <br><br>
+    To weave resonance, you must utilize three distinct components: <br><br>
+-<b>The Fuel</b> (Resonance & Intent), <br>
+-<b>The Vehicle</b> (The Words), <br>
+-<b>The Weather</b> (Celestial influence). <br>
+Mastery of these ensures your magic moves as it's supposed to and avoids damaging the weaver, backfiring obnoxiously, or creating dissonance that attracts entities like Gremlins or Scatter-Souls.</p>
+
+    <p class="drop-cap-para"><b>The Fuel (Resonance & Intention):</b><br>
+    Everyone's natural resonance is necessary in the ingredients of the weave. One can tune with the frequency of the Rootmother River, using both sources of resonance to power the weave. Then it is projected physically through the tone of your voice.<br>
+<b>- Low tones</b> are for grounding and stabilizing (mending objects, sonic wards, physical anchors).<br>
+<b>- Mid tones</b> are used in illusion and shaping weaves (communication, resonance shaping, neutral projections). <br>
+<b>-High tones</b> activate and release weaves that summon, cause energy spikes, and initiate movement.</p>
+
+    <p class="drop-cap-para"><b>The Vehicle (The Words):</b><br>
+    This gives the weave its form. Magic is a collaborative acoustic act. Resonance in Atheria responds more openly to a "Standard Pitch." Atheric was crafted to ensure that diverse cultures can weave together without creating harmonic static. Weaving in one's native tongue is used for ancestral rites, private healing, and familial bonds. These weaves are emotionally nuanced, mostly tonal sounds,  and rich with historical & ancestral resonance. When multiple cultures weave together, weaving is done in Atheric. It is the "common score" that allows weavers from the Twin-Currents to the Rootwood to contribute to a singular, stable weave without causing dissonance.</p>
+
+    <p class="drop-cap-para"><b>The Weather (Celestial Influence):</b><br>
+    The planets, moons, and celestial currents represent the "road conditions." Their position in the sky determines how magic behaves. The five planets and sun determine the cost and consequence of your magic. The moons govern volatility and emotion. Together, they determine how the magic "feels." Finally, the Currents are the patterns in our lives that dictate where magical energy pools, flows, or knots.</p>
+  </div>
+  <div class="section-divider">☽⛧☾</div>
+</div>
+<br><br>
+<!-- Language Dropdown -->
+
+  <details class="custom-dropdown lore-card" onclick="toggleGlow(this)">
+    <summary>✨ Atheric: The Language of Magic ✨</summary>
+    <p style="font-size: 1.4rem; font-family: 'Viaoda Libre', serif; margin-top: 15px;">Historical Fun Fact:</p>
+    <p>After the treaty was signed, more than ever before, different cultures were intermingling. They soon found themselves facing language barriers and a lot of, albeit comical, annoying miscommunications, especially with group magic and law-making. The guilds worked very hard through trial and error; eventually, Atheric was created and every country was happy to adopt it as a second language. What started as a gathering to update the language as words naturally evolve became a global day of celebration. Now once a year, in early winter on the day it was codified into law, the people of Atheria gather in the Respite where the law was signed, welcoming the Old Confluence Tree. They celebrate the ability to communicate and enjoy their shared values.</p>
+    <p>
+      <b>Beware:</b><br>
+      • Mispronouncing words or using incorrect tones will drastically alter any weaves.<br>
+      • If you are fleeing the law or concealing malice, during gendarme questioning, you will emit an odor that smells like burnt hair and spoiled meat, alerting the Ferrets or Raskets.<br>
+      • If they shriek at you, it will be received as a "tiny indictment" (indictments, regardless of the shrieker's size or species, are grounds for investigation).<br>
+            • A Tiny indictment does not automatically mean a person is guity. Its merely cause for questioning/investigating. Ferrets warn, persons judge, records decide. 
+      • Atheric was created for unity and is used in Resonant Harmonics.
+    </p>
+  </details>
+
+ <div class="section-divider">☽⛧☾</div>  
+ <details class="custom-dropdown lore-card" onclick="toggleGlow(this)">
+    <summary>✨ Birth Anniversary & The Wheels of Heaven ✨</summary>
+<p>Birth Anniversary refers to the day a person is born. Atherians do not use the term birthday. Atherians age physically, three years slower but mentally & emotionally, three years faster than their earthly counterparts. 
+<br>Seven immense wheels, rotate within one another. They aren’t made of metal, nor are they truly light. Instead, they are composed of time, gravity, intention, and a touch of regret. Each wheel governs a different layer of reality, turning at its own unyielding pace. <br>
+A chart does not predict fate. <br>
+<b>It reveals:</b> Resonance bias, magical ease and friction, recurring life tensions, the kinds of conditions under which a person thrives or distorts. A chart is not a command. It is a pattern map. An anniversary chart updates every year and acts as a chart overlay, modifying your birth chart with the current years astrological positions. </p>
+ </details> 
+ <br>
+ <div class="image-container">
+<img src="https://themapmakersnotebooks.neocities.org/Pictures%20/wheelsofheaven.png" 
+alt="Centered Image" style="width:480px;height:450px;border:1px solid; border-color:#5b37a3;"> </div>
+<br>
+ <details class="custom-dropdown lore-card soft-shadow">
+<summary> The Septenary of Echoes</summary>
+<p style="font-family:'Viaoda Libre', serif;color:#C1A500;text-align:left;font-size:20px;" class="glow-all">The Wheels do not turn. Turning is a Celestiran notation describing changes in the aggregate relationship between immeasurable forces. The Wheels are not physical objects, nor do they command the forces whose names they bear. They are the language Celestira gave to patterns too vast and numerous for mortal minds to perceive whole. Each represents countless small movements occurring across existence at once: choices made, roads crossed, memories retained, chances taken, ages ending. Celestira reads these movements as easily as mortals might read ink. <br>
+She writes what she sees into the heavens in Divine Atheric. Astriel, her Envoy, translates her message. Even translated, much of its meaning exceeds ordinary mortal comprehension. Skilled Oneiroi and celestial scholars spend lifetimes learning to read what remains. Thus, when stargazers say the Wheels are turning, grinding, or aligned, they are describing the condition of reality, not the motion of celestial machinery.<br><br>
+They have been given many names. And depending on who is speaking, any number of which you will hear. The most widely used are, The Shifting Times, the Orrery of Breath, the Counterwise Clock.</p>
+<hr class="resonant-divider">
+
+<details class="custom-dropdown soft-shadow glow-all">
+<summary> The Wheels I - IV</summary>
+<p style="font-family:'Viaoda Libre', serif;color:#C1A500;text-align:left;font-size:20px">
+<b>The Outer Wheel of Fate:</b><br>
+<b>Trajectories</b><br>
+The accumulated direction of things. At the smallest level, practically invisible. Across civilizations, worlds and ages, those tiny trajectories become enormous momentum. That's why it is slow and relentless and why it creaks around collapsing empires. The Wheel does on the large scale for all existence what Syric does for Atheria. Syric works with Atheria's threads. The Wheel registers all threads everywhere. There may be many realms like Atheria and they may all have a Syric. <br>
+
+<b>The Second Wheel of Chance:</b><br>
+<b>Deviations:</b><br>
+Slightly off-center. Always has been. It describes the countless tiny possibilities by which something might happen differently than expected. A wrong turn, a misplaced step, a seed carried one field farther, a meeting is delayed by a moment. It is a weave catching an unintended note. Most deviations disappear unnoticed. Others redirect entire lives. Its famous wobble is Celestiran notation for the persistent uncertainty woven through existence. It is why miracles happen. It is also why excellent plans fail beautifully.
+
+<br>
+<b>The Third Wheel three Seasons:</b><br>
+<b>Cycles:</b> <br>
+Not merely weather. Not merely years. The Third Wheel describes cycles of becoming: emergence, flourishing, decline, ending and renewal. Forests have seasons. Civilizations have seasons. Magic has seasons. Ideas, creatures, stories and even the things mortals consider permanent may eventually reach winter. Its smallest movements occur constantly and everywhere. Its greatest shifts can define an age. When the Third Wheel turns heavily, old myths retire and new monsters learn their names.
+<br>
+<br>
+<b>The Fourth Wheel of Topsides & Roads:</b><br>
+<b>Connections and crossings:</b><br>
+Everywhere has a way in. Not every way remains open. The Fourth Wheel describes crossings. The movement between places, states and boundaries. Footpaths and sea lanes belong to it, but so do migrations, thresholds, messages, currents and stranger passages for which mortal cartographers have no satisfactory symbols. Sailors say it hums before storms. Travelers blame it when familiar roads feel strangely wrong. When its relationships grind against the other Wheels, maps have been known to twitch. Cartographers generally prefer not to discuss this. </p>
+</details>
+<hr class="resonant-divider">
+<details class="custom-dropdown soft-shadow glow-all">
+<summary> The Wheels IV - VII </summary>
+<p style="font-family:'Viaoda Libre',serif;color:#C1A500;text-align:left;font-size:20px">
+<b>The Fifth Wheel of Memory: </b><br>
+<b>Retention:</b>
+Most things travel forward. Memory occasionally disagrees. The Fifth Wheel describes what existence retains. The resonance left by something that was once present and the innumerable ways the past continues to participate in the present. Celestiran notation sometimes depicts this Wheel as moving backward. Scholars still disagree about precisely what this means but they do agree on the impact it leaves. Ghosts feel warm. Forgotten songs return complete, and names come back to the living uninvited. 
+<br>
+<br>
+<b>The Sixth Wheel of Will:</b><br>
+<b>Choices:</b><br>
+The most fragile the most frequently touched. The Sixth Wheel describes choice. Every deliberate act exerts an almost immeasurably small pressure upon it. Most mortals will never know they have touched anything at all. But there are a great many mortals. Every action of refusal, each small kindness, a betrayal, a traveler's decision to stay, the homebody's decision to leave. Individually, each moves almost nothing. Together, the choices we make cause a cosmic ripple effect. Some create waves, but it's often the smallest creatures in creation that collectively have the greater influence over the architecture of existence. 
+<br>
+<br>
+<b>The Hidden Wheel Silence:</b><br>
+<b>Absence: </b><br>
+Unlike the other Wheels, Silence has never been translated by archivists who can agree on whether or not the translation is correct. Silence isn't automatically absence, death, Void, forgetting or rest in Atheria. The fact that nobody can properly chart this Wheel may be exactly why nobody agrees on what it is measuring.<br>
+
+Mortals and gods alike both experience the impact. Reading them are not predictions. They are a diagnosis. “Ah,” the stargazers say, “the wheels are grinding today. Be gentle with promises” Magic works best when wheels align and backfires when they grind.</p>
+</details>
+</details>
+<hr class="resonant-divider">
+  <br>
+<div class="lore-card" onclick="toggleGlow(this)">
+<h1 style="font-size: 1.4em; font-style: bold;"> NOTICE: Crossveil Event:</h1> Advisory for the upcoming Crossveil Event. 
+This is a category level 5, not-worth-it risk. This Crossveil is carrying an excessive and severe amount of emotional asymmetry. This only occurs when Veyra is in Rooted Night while Kalthyr is at Full Skywell. All illusions will fail instantly, especially when Solaris is home in the sky. Citizens are reminded that all magical debt must be settled at a Tithing Well before the wheels turn again. Atheria does not forgive the debt; it simply waits for the resonance to collect itself with interest. Because this is a particularly volatile event, the risk of summoning Scatter-Souls is much higher than usual. Illusion weaves may fail in producing their facades, they still succeed in producing the odor that attracts the Scatter-Soul.
+</div>
+
+  <br>
+   <div class="scroll-container">
+  <h2 class="scroll-title">🎇Scatter-Souls 🎆</h2>
+  <div class="scroll-subtitle">⚡ Summoning & Side Effects⚡</div>
+<hr style="border: 0; border-top: 1px solid #ccc; margin: 20px 0;">
+  <div class="prose-text">
+ <p>Scatter‑Soul is a Rare Magical entity known to manifest when illusion weaves are cast with excessive negativity, spite, emotional dissonance, or general non-humoures pettiness. Due to a series of outbreaks and the upcoming lunar event, we've provided the public with this list of rare magical…side effects. These side effects tend to show within minutes after the weave has been threaded. The entity is composed of accumulated apathy and unprocessed emotional residue. Scatter‑Soul is highly distractible. It is drawn to: shiny objects, dull objects, sweet foods, salty foods, humorous stimuli, tragic stimuli, educational materials, and anything else that exists. This is not a benefit. This is not a comfort. This is not your friend. Once attracted, Scatter‑Soul’s magic is devastating and may rebound onto the caster or bystanders. The entity is unpredictable, easily distracted, and, according to those who’ve seen it, far too interested in everything. We have obtained eyewitness testimony. We warn you it is graphic. Reader discretion advised. Unfortunately, we are unable to grant birth anniversary exemptions for these. </p>
+<br>  <br>
+<h1 style="font-size: 1.4em;">✨ Symptoms Of Scatter-Soul Attachment ✨</h1>
+If you have recently performed an illusion weave with malicious intent, watch for the following signs:<br>
+- The Meat‑Sweats after consuming any amount of meat. <br>
+- High Anxiety Around Clowns, including drawings, dolls, or murals. <br>
+- Flickers of delicious food in peripheral vision. <br>
+- Nosebleeds that get progressively worse the more you lie or fib. <br>
+-Lying by omission is strongly ill-advised. Scatter-Souls can smell secrets under emotional strain, particularly those recently told, desperately withheld, or sitting just behind the teeth. 
+If you're actively struggling not to tell someone, assume she already knows you are. <br>
+- Persistent Hiccups lasting longer than 32 hours. <br>
+- A inconsistant feeling of existential dread lasting more than 16 hours <br>
+If three or more symptoms occur, cease weaving and seek a licensed Resonance Healer. 
+</div>
+</div>
+<br><br>
+<details class="custom-dropdown">
+  <summary>Witness Statement: Reader Discretion Advised</summary>
+<hr style="border: 0; border-top: 1px solid #ccc; margin: 20px 0;">
+<span style="font-weight: bold; color: #E6D529; font-size: 1.2em;">Tessa Q:</span> “We are here with a miss Auriel Goldflare, who saw the effects of this entity first hand. Miss Goldflare, tell me why the 'victim' performed the illusion weave that attracted the Scatter Soul?"<br>
+  <span style="font-weight: bold; color: #55aaff; font-size: 1em;">Witness:</span> “Here's what happened, my ex boyfriend, let’s call him Jorren, because that’s his name, decided to thread an illusion weave to make this guy he's <em>jealous</em> of to think he literally has six marbles for a brain. And that he lost three of them and needs to find them. I told him not to. I told him it was petty, stupid, and a guaranteed way to catch the meat sweats and potentially ruin his love of lying. He didn’t listen. He never listens.”<br>
+  <span style="font-weight: bold; color: #E6D529; font-size: 1.2em;">Tessa Q:</span> “Can you tell us what happened after the weave was completed ?”<br>
+  <span style="font-weight: bold; color: #55aaff; font-size: 1em;">Witness:</span> “Yeah, the moment he threaded that weave, I swear I saw the dissonance leave his body. It was like watching a puff of emotional green smoke just spurt out of him, resentment, spite, the whole bag, it smelled awful.”<br>
+  <span style="font-weight: bold; color: #E6D529; font-size: 1.2em;">Tessa Q:</span> “When did the entity appear? What did it look like?”<br>
+  <span style="font-weight: bold; color: #55aaff; font-size: 1em;">Witness:</span> “As soon as the last spurt of smoke dissipated, it happened. Honestly, I'm surprised the Pettiness house hasn't found a way to charge this thing with an over dramatic entry. It appeared in a ridiculous way. It is flamboyant and weird. It's…unpleasant to describe, it's… almost looks like an archivist. Gross. Tall. Thin. Carries a little clipboard. Spectacles. A posture that screamed 'I’m not mad, just disappointed.' Then it looked at Jorren. Then it looked at the weave. Then it looked at the poor man crawling on his hands and knees. Then it marked something on the clipboard, glanced up at us once more, then, rather boringly, actually it just… vanished. Poof, gone. But I'll say, when our eyes met, I immediately smelt it. I know now why it looked like that. It was a look of pity, It knows I'll be there for him, to get shit on with him. Because I love him. Like an idiot.”<br>
+  <span style="font-weight: bold; color: #E6D529; font-size: 1.2em;">nTessa Q:</span> "That's either sweet or dumb. But, wait. Really, it just vanished? And that was it?”<br>
+  <span style="font-weight: bold; color: #55aaff; font-size: 1em;">Witness:</span> “That's it? Ugh you have no idea. Listen, it might come in leaking all that pizzazz, but when it leaves, it does so, so boringly, it's like you become the very idea of boring itself. Like you will never feel anything else.”<br>
+  <span style="font-weight: bold; color: #E6D529; font-size: 1.2em;">nTessa Q:</span> “Intense boredom? Pfft, it doesn't sound that bad.”<br>
+  <span style="font-weight: bold; color: #55aaff; font-size: 1em;">Witness:</span> `(sharp sniff)` “Dana pretends to be blind! You got here after it left; you didn't smell the warning, you don't…kno... `[sniffs weakly]` Ach! I'm going to throw up.”<br>
+  <span style="font-weight: bold; color: #E6D529; font-size: 1.2em;">nTessa Q:</span> “Ok, while the witness is, uh, aggressively… um…on a break, let's hear a message from our sponsors…”<br><p>
+    
+  <b>[COMMERCIAL INSERTION]</b><br>
+  🎵 <i>Ting-ting, ling-a-ling... TING!</i> 🎵<br><br>
+  <b>ANNOUNCER (V.O.):</b><br>
+  "Did you have a non-humouress petty prank go wrong? <br>
+  Did a Scatter-Soul throw up all over your kitchen hearth again? <br>
+  Did an illegal spite-weave leave an emotional ectoplasm puddle on your nice rug? <br>
+  Don't stress the mess!Scour-Root Brand Disinfectant dissolves 91.9% of 
+  residual resonance smoke, spite-spurt, and phantom bile.
+  Mildly toxic if swallowed; highly effective if spilled.<br>
+  Scour-Root: Clean the magic away!"<br>
+  🎵 <i>Ding-dong, dell... Scour-Root cleans well! Wahbow!</i> 🎵<br>
+  <b>[END OF COMMERCIAL INSERTION]</b></p>
+  
+<h2>Welcome Back!</h2>
+  <hr style="border: 0; border-top: 1px solid #ccc; margin: 20px 0;">
+<p><span style="font-weight: bold; color: #55aaff; font-size: 1em;">Witness:</span> “It just leaves you, you know the feeling when it's a free day, you know home alone, it's wonderful. Then you get the feeling you're supposed to be doing something or you're forgetting something important. Hmm, mmp. Anyways, you can't remember what you could be forgetting. It's the weekend, so no work. You're an adult. But the anxiety does not end. It's an ever growing pit in the belly! Ugh ack!”<br>
+  <span style="font-weight: bold; color: #E6D529; font-size: 1.2em;">nTessa Q:</span> “Are you ok dear?”<br>
+  <span style="font-weight: bold; color: #55aaff; font-size: 1em;">Witness:</span> “Yes, I'm ok. Uh oof, I'm alright. 
+  So, anywhos, where was I? Right, the scatter soul vanished and almost immediately, the hiccups started. He still has them. It’s been five days. He’s miserable. He can’t sleep. He can’t eat. He hiccuped so hard yesterday he fell off a chair. 
+  The Healers say it’s a 'mild attachment.’ 'Mild?!I don’t want to know what a severe one looks like. My friend had a birth anniversary party yesterday. He ran off the minute the mime came out. I didn't know mimes counted as clowns?!” [runs away crying] <br>
+  <span style="font-weight: bold; color: #E6D529; font-size: 1.2em;">nTessa Q:</span> “Well, there you have it, we hope they'll be ok. The Mycelians and the Driftlight have officially declared a health concern. Please see Fiona for any concerns, questions, or directions around the Respite. And now, an announcement from the courts.”</p><br>
+<details class="dropdown" style="padding:20px;">
+  <summary>Public Warning: Scatter‑Soul Hazard</summary>
+<p style="margin-top: 0px; margin-bottom: 15px;">
+  <em>Issued by Order of the Atherian Courts, Office of Magical Risk & Resonance Safety</em>
+Symptoms Confirmed by the Journalist, Tessa Q that the <em>“victim”</em> Jorren has displayed:<br>
+</p>
+<ul style="margin-top: 5px; margin-bottom: 15px;">
+  <li>The meat‑sweats after eating a single bologna hotdog.</li>
+  <li>Vomit-inducing panic attack around birth anniversary party mimes <br>
+  (despite not technically being a clown).</li>
+  <li>Flickers of anchovies (his favorite food) in his peripheral vision.</li>
+  <li>Nosebleeds whenever he lies (sources confirm he enjoys lying).</li>
+<li>Hiccups that worsen when he tries to sleep (sources claim the <em>“victim”</em> has been enduring hiccups for five days now). </li>
+</ul>
+<p>This just goes to show that the Scatter‑Soul is not subtle. Scatter‑Soul is not kin .Scatter‑Soul is not patient. And once it marks you, it does not leave until it has <em>“balanced the emotional ledger.”</em>
+</p>
+<p style="font-size: 0.9em; color: #777777; font-style: italic;">
+  *We are legally obligated to refer to the individual as a victim in this report. However, the courts maintain the right to believe that the individual brought this upon themselves and did not earn the right to victimhood.</p>
+  <details class="dropdown" style="padding:20px;">
+  <summary>AMENDMENT NOTICE SECTION 9-B (Humorous Classification):</summary>
+<hr style="border: 0; border-top: 1px solid #ccc; margin: 20px 0;">
+<p>While standard spite triggers an aggressive balancing of the emotional ledger, a genuinely clever petty illusion may cause the entity to laugh. In these rare events, she will attempt to provide a "reward" using whatever objects happen to be loose in her pockets. These items are not inherently dangerous, but they are consistently inconvenient.<br><br>
+  Documented pocket rewards include: </p>
+<ul style="margin-top: 5px; margin-bottom:15px;">
+  <li><strong>A live beetle</strong> (unremarkable, but it insists on sleeping in your shoe).</li>
+  <li><strong>Her own left sock</strong> (smells faintly of old parchment; always leaves your right foot cold).</li>
+  <li><strong>It's favorite unfinished knit scarf</strong> (only three inches long; the knitting needles are still attached). </li>
+  <li><strong>A single, heavy brass key </strong> (fits absolutely no lock in the known realms. It swears it goes to something mildly expensive).</li>
+</ul>
+<p>  <span style="font-weight: bold; color: #ffaa00;">Note:</span> On exceedingly rare occasions, the entity is caught entirely prepared and will bestow a genuinely awesome, pristine gift (e.g., a flawless, self-inking archivist fountain pen, or a perfectly ripe cosmic pear).<br><br>
+  However, attempting to intentionally prompt this behavior is highly discouraged.</p>
+</details>
+</details>
+</details>
+<br><br>
+<div class="lore-card" onclick="toggleGlow(this)">
+<h2 style="text-align:center;">Aurelion Dominant Protocol</h2>
+<p>We are currently in an <b>Aurelion Dominant</b> phase, measured at a staggering <b>91% intensity</b>. 
+During such periods, symbolic resonance and myth-making outperform technical mechanics. Magic becomes "story-bound," meaning, the risk of an outbreak of "Main Character Syndrome". The "harmless" white lies are not in fact "harmless" the Bureau warns that belief now outweighs fact, and failures will become theatrically dramatic. Entering buildngs in a flamboyant manner is still illegal, regardless on whether or not Aurelion agrees,you possess no narrative justification.</p>
+</div>
+  <br>
+   <div class="scroll-container">
+  <h2 class="scroll-title">✨ How Astrology Works ✨</h2>
+  <div class="scroll-subtitle">✦ "Astrology is a conversation we were never meant to hear, 
+but eavesdropped on anyway"✦</div>
+  <div class="prose-text">
+  <h1 style="font-size: 1.4em;"> Celestira, the Intercessor of Light </h1>
+The Goddess of stars, dreams and constellations, created the stars and planets and set the rules of play, but she does not decide the game. The heavens choose. Celestira conveys. Mortals interpret. Reality responds accordingly. Control was never the point. Continuity was.<br> She receives celestial maps, interprets their meaning and then directs Astriel, the envoy, on the distribution of dreams, constellations, astral phenomena, seasonal shifts, and personal birth charts. She cannot override celestial will, rewrite outcomes once expressed, force interpretation, or silence a star that has chosen to speak. She reads the minutes. This is why astrology is never perfectly clear. Translation always loses something. <br>
+<h1 style="font-size: 1.1em;"> Tracking the Sky</h1>   
+<b> The Pocket Orrery: </b><br>
+A palm-sized mechanical device with nested brass rings attuned to the sky's vibrational signatures. As the celestial wheels turn, the internal gears hum and click into place automatically, allowing a traveler to read favor and suppression at a glance.<br>
+<b>Resonance Tuning Forks: </b><br>
+High-tier weavers and scholars utilize forks cut to a planet's baseline pitch. When struck, a fork will "catch a carrier wave" and sustain its note if its corresponding planet is dominant, vibrating with enough force to cause tactile tingling in the fingers.<br>
+<b>The Ephemeris Slate:</b>
+ Found in every tavern and workshop, this slate serves as a "weather forecast" for the civic laypersons. A town astrologer rings a chime daily to announce active pegs (e.g., Viren + Skywell Kalthyr), preventing "Celestial Negligence" by ensuring blacksmiths and guards adjust their work to the current resonance.
+<h1 style="font-size: 1.4em;"> The Planets</h1>
+<div class="scroll-subtitle">The Consequence & Cost. They dictate what magic costs, favors, or corrupts.</div>
+<details class="dropdown">
+ <summary>1. Solaris, The Sun (The Constant):</summary>  
+Symbol: The Constant / Gold Disc. <br>
+Cycle: Loops but only dominant 
+Truth is made public; magic favors permanence over finesse.<br>
+Secrets fail; leadership is tested; "Gilded Stitch" risk.<br>
+Charges: "Willful Obfuscation of Public Consequence" <br>
+ </details>
+<details class="dropdown">
+ <summary style="font-size: 18px;">2. Thalassa The Deep Wanderer:</summary>
+Symbol: Waves over Crescent Moon<br>
+Borders blur; travel increases; people feel pulled toward unknown paths.<br>
+Spells drift from casters; Seafarers go missing, showing up weeks later. <br>
+Charges: "Geographic Coercion"<br>
+</details>
+<details class="dropdown">
+<summary>3. Pyra The Red Hammer: </summary>
+Symbol: Ember-Star. <br>
+Tempers flare; creation through destruction; sudden power spikes.<br>
+Accelerated harm; "necessary damage" to structures.<br>
+Charges: "Incitement Through Celestial Negligence"
+</details>
+<details class="dropdown">
+<summary>4. Viren: The Verdant Judge:</summary>
+Symbol: The Green Star<br>
+Long-term plans succeed; lineages matter; the past resurfaces legally.<br>
+Magic binds future generations; slow recovery.<br>
+Charges: Unconsented Legacy Imposition
+</details>
+<details class="dropdown">
+<summary>5. Noxara The Black Listener:</summary>
+Symbol: A Darkened Halo <br>
+Espionage succeeds; records go missing; memory edits feel justified.<br>
+Erosion of truth; reliable history becomes impossible.<br>
+Chssrges: Reality Tampering
+</details>
+<details class="dropdown">
+<summary>6. Aurelion The Gilded Wanderer:</summary>
+Symbol: Radiant Arc<br>
+Symbols outweigh facts; martyrs are created; heroes rise.<br>
+Narrative-binding makes mechanics secondary.<br>
+Charges: Manufacture of Legend
+</details>
+<br>
+<h1 style="font-size: 1.4em;"> The Moons </h1>
+<div class="scroll-subtitle">While planets set the "road conditions," the three moons: Selunaris, Veyra, and Kalthyr, govern the Volatility and Emotion of the weave.</div>
+<details class="dropdown">
+<summary> Selunaris:</summary>
+(The Silver Moon): The “main” moon. Governs tides, dreams, healing, intuition. It is a masterpiece for healing and dreamwalking, but it lacks the sharp attack needed for destructive casting. This is the most “natural” and intuitive celestial body for mages to harmonize with.
+</details>
+<details class="dropdown">
+<summary> Veyra:</summary>
+ (The Amethyst Moon): The moon of shifting perspectives and prophetic dissonance. It governs illusions and emotional intensity. It is famously unstable; under its amethyst light, the “truth” often bends or vibrates with a dangerous, unpredictable intensity. Excellent for astral work and glamours, but dangerous for binding oaths that require precision.
+</details>
+<details class="dropdown">
+<summary> Kalthyr:</summary>
+(The Ashen Moon): The Underworld moon. The moon of the cold, unvarnished truth of the world beneath. It governs spirits and memory with a sharp, clear resonance that lacks any emotional padding or comforting overtones. “cuts” clean and deep. It is the premier moon for truth rites and the severing of ties, as forgotten things resurface with clinical clarity; however, it is a poor choice for sustaining long-term enchantments. 
+</details>
+<br>
+<h1 style="font-size: 1.4em;"> The Lunar Cycles & The Currents </h1>
+<div class="scroll-subtitle">Magic is effected when the moons changes phases. Some effects are beneficial, making some stronger. Some phases however, cause magic to become dangerous, deadly, or disappear entirely </div>
+
+<details class="dropdown">
+<summary> Lunar Phase Glossary:</summary>
+<b>Rooted Night (New):</b> Magic is dampened and internal; shadow-magic remains inert. <br>
+<b>Sliverwake (Crescent): </b> Low power but high intuition; weak spells succeed unexpectedly.<br>
+<b>Brightmirror (Waxing Half): </b> The most stable phase for precision weaving and binding rituals.<br>
+<b>Nearburst (Gibbous): </b> The "emotional peak." Resonance overflows and spells amplify unintentionally.<br>
+<b>Skywell (Full):</b> Maximum power; truth is unavoidable; magic may permanently alter the caster.<br>
+<b>Fadeshine (Waning Gibbous): </b> Revelations occur as magic begins to unravel.<br>
+<b>Dimmirror (Waning Half):</b> Ideal for cleansing and the forced falling of glamours.<br>
+<b>Lastsliver (Waning Crescent):</b> A time of closure, preparation, and ritual silence.<br>
+</details>
+<details class="dropdown">
+<summary> The Chaos Nights:</summary>
+<b>Nearburst Conjunction (Mid-Month):</b> <br>
+occurs when all three moons enter the gibbous phase simultaneously,creating a "Red Sky" night where resonance violently overflows, requiring the Gendarme to enforce absolute "Acoustic Sovereignty." <br>
+<b>The Shattered Well (End-Month):</b> <br>
+When one moon is <b>Full (Skywell)</b> while the other two are <b>New (Rooted Night)</b>. 
+This pulls reality "lopsided," threatening the stability of form and causing permanent enchantments to fracture under the excess weight of asymmetry.
+</details>
+</div></div> 
+<br>
+<br>
+ <h2 style="font-family:'Nightmare Gothic',serif;color:#e5e7eb;">The Celestial Currents & The Age of Magical Majority</h2>
+
+<div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center; align-items:flex-start;">
+  
+  <!-- LEFT DROPDOWN -->
+  <details class="custom-dropdown glow-border-gold" style="flex:0 1 450px;">
+    <summary style="font-size:20px;font-family:'Nightmare Gothic',serif;color:#e5e7eb; cursor:pointer;">
+      The Seven Celestial Currents
+    </summary>
+    <p style="font-size:16px; margin-top: 10px;"> 
+      The "Currents" identify the recurring narrative pressure and life path.
+      This combination reveals a "gift, a strain, a cost, and a path forward" for the year ahead. 
+      It is determined by the birth week or seasonal weather.<br><br>
+      
+      <b>The River Crown (Early Spring):</b><br>
+      Potential and beginnings. Those born here are often stubborn and possess a memory that never truly clears. <br><br>
+      <b>The Twin Lanterns (Late Spring):</b><br>
+      Fate and Luck. This current exerts heavy pressure on decision-making and risk assessment.<br><br>
+      <b>The Mycelial Veil (Early Summer):</b><br>
+      Secrets and ancestral messages. A time when hard, hidden truths surface through the root networks.<br><br>
+      <b>The Sunforge Gate (High Summer):</b><br>
+      Strength and discipline. Represents renewal through the endurance of difficult trials.<br><br>
+      <b>The Dreamwalk Spiral (Autumn):</b><br>
+      Intuition and veiled truths. It exerts a pressure of silence, favoring quiet signals over loud declarations.<br><br>
+      <b>The Fractured Crown (Late Autumn):</b><br>
+      Transformation and trauma. Associated with the endurance required to survive systemic shifts.<br><br>
+      <b>The Silent River (Winter):</b><br>
+      Stillness and reflection. Those born here often hear whispers; they are either perfectly aligned or dangerously stagnant.
+    </p>
+  </details>
+  <!-- RIGHT DROPDOWN -->
+  <details class="custom-dropdown glow-border-gold" style="flex:0 1 450px;font-size:18px;padding:10px;">
+<summary style="font-size:20px;font-family:'Nightmare Gothic',serif;color:#e5e7eb; cursor:pointer;"> Cycle Age & Magic</summary>
+    <div>
+<p>The Atherian Astrological system focuses on a person's Return Pattern that acts as an additional layer of insight into what the year has in store for each individual. Certain privileges and weaves are only permitted for those over the age of magical majority, calculated via Harmonic Cycles instead of chronological time.
+<br>
+      <b>Cycles &lt; 28:</b> Only minor, single thread weaves.<br>
+      <b>Cycles 29-100:</b> Ability to tune with planetary dominance.<br>
+      <b>Cycles 100+:</b> Ability to weave during triple-moon alignments or "Red Sky" nights without structural collapse.</p>
+      <!-- Fixed: Changed from h2 to h3 inside the content for proper syntax -->
+ <h3 style="font-size:20px; font-family:'Nightmare Gothic',serif; color:#e5e7eb; margin-top:20px;">The Lunar Maturation System</h3>
+<div style="font-size:16px; line-height: 1.5;">
+ <b>The Rooted Stage (Cycles 1–28):</b><br>
+<em>Threshold:</em> Simple harmonic threads.<br>
+<span><em>Maturity:</em> Caster lacks Identity Cohesion; high level weaves cause immediate harmonic distortion or spell-fizzle.</span><br><br>
+<b>The Resonant Stage (Cycles 29–100):</b><br>
+<em>Threshold:</em> Major Magic (multiple threads).<br>
+ <span><em>Maturity:</em> Caster has endured enough lunar transitions to harmonize their internal voice and channel planetary energy.</span><br><br>
+ <span style="color: #bbb;"><b>The Harmonic Anchor (Cycles 100+):</b></span><br>
+  <span style="color: #bbb;">
+ <em>Threshold:</em> Ritual magic and reality-altering resonance.<br>
+ <em>Maturity:</em> Caster understands the Kalthyr cycle. They possess the Identity Cohesion to survive the backlash of Major Magic.
+        </span>
+      </div>
+    </div>
+  </details>
+</div> <!-- END OF FLEXBOX WRAPPER -->
+<br>
+
+<!-- SECOND ROW OF DROPDOWNS -->
+<div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center; align-items:flex-start; margin-top:20px;">
+<h2 style="font-family:'Nightmare Gothic',serif;color:#e5e7eb;text-align:center;" class="text-shimmer shadow-creep">The People and Magic</h2>
+<p>Every race weaves by the same laws. They use the same formula, the same Standard Pitch called Atheric, and tune to the same Atherian frequency. What differs is the resonance they bring into the braid. Each race possesses its own natural frequency. As that frequency braids with Atheria's, it gives the resulting weave a characteristic flavor. 
+The flavor does not determine what can be woven; it influences how the weave manifests.</p>
+
+<p>A levitation weave remains a levitation weave whether performed by a Vespralith, Tide-Runner, Mycelian, or Shardborn. The words and required tones may be identical, but the resulting weaves will carry subtle differences because the frequency entering the braid is different. In group weaving, participants first tune to one another. Their individual frequencies form a shared chord, which is then brought into tune with Atheria. The completed weave therefore carries the flavors of every resonance contributing to it. Atheric standardizes the score. It does not standardize the singer.</p>
+
+  <!-- LEFT DROPDOWN -->
+  <details class="custom-dropdown glow-border-gold" style="flex:0 1 450px;">
+    <summary style="font-size:20px;font-family:'Nightmare Gothic',serif;color:#e5e7eb;">
+      The Flavor of Resonance: Created by Divine Hands
+    </summary><br>
+
+    <p><b>1. The Vespralith: The Resonant Philosophers:</b><br>
+<b>Magic:</b><br> Vespralith are natural conduits for resonance and masters of Resonance Weaving. Their innate resonance expresses itself most readily through sound and vibration, making them natural experts in sonomancy. Through their voices and ambient vibrations, they can shape, carry, and manipulate resonance in the world around them. Created by Virelia (Curiosity): Goddess of philosophy, communication, and knowledge. </p>
+
+<p><b>2. The Solari: The Architects of Balance:</b><br>
+<b>Magic:</b><br> Solari resonance naturally expresses itself through light and atmospheric phenomena. 
+Their weaves can manipulate light, solar energy, and clouds. Common expressions include Cloudwalk, which allows clouds to be traversed as solid ground; Cloudspeech, which allows communication through clouds; and Sun's Spark, the channeling of solar energy. Created by Alezion (The Balanced Step):  God of order, symmetry, and justice.</p>
+
+<p><b>3. The Oneiroi: The Starborn Dreamers:</b><br>
+<b>Magic:</b><br> Oneiroi resonance is particularly responsive to celestial and oneiric influence, expressing itself through dreams, astral space, and the cosmos. Their magic includes dreamwalking, astral charting, and cosmic weaving. This affinity also allows them to navigate and protect the Astral world. Created by Celestira (The Star-Dreamer):  Goddess of stars, wonder, and cosmic imagination.</p>
+
+<p><b>4. The Mycelians: The Fae-Shrooms:</b><br>
+<b>Magic:</b><br> Mycelian resonance expresses itself through living systems, particularly plants, fungi, and their interconnected networks. Their weaves can bless crops, quicken growth, heal wounds, and produce a variety of magical spores. Their natural connection to mycelial networks also allows resonance to be carried and shared across living pathways. Created by, Sylvara (The Greenmother):  Goddess of renewal, flora, and seasonal growth.</p>
+
+<p><b>5. The Tide-Runners: The Weavers of Chance:</b><br>
+<b>Magic:</b><br> Tide-Runner resonance expresses itself through probability and possibility. Their weaves range from minor luck nudging, altering probabilities in their immediate surroundings, to advanced Pathweaving, which guides events toward particular possible outcomes. Their extraordinary aptitude for mathematics and pattern recognition allows them to rapidly calculate probabilities and recognize potential paths. Created by, Syric (The Threadbinder): God of fate, and Aria (The Wild Spark):  Goddess of chance.</p>
+</details>
+
+  <!-- RIGHT DROPDOWN -->
+  <details class="custom-dropdown glow-border-gold" style="flex:0 1 450px;">
+    <summary style="font-size:20px;font-family:'Nightmare Gothic',serif;color:#e5e7eb;">
+      The Flavor of Resonance: Created by Raw Emotional Resonance
+    </summary>
+
+<p><b>6. The Shardborn: The Crystallized Notes:</b><br>
+<b>Magic:</b><br>Shardborn resonance expresses itself through refraction. Their crystalline bodies naturally alter the way resonance passes through them, allowing them to redirect, divide, concentrate, or amplify a weave much as a prism alters light. They can also use different crystals and prisms to deliberately change how resonance is expressed. Their unusual harmonic structure makes them particularly effective at amplifying the magic of other races. Born from leftover divine resonance of the six as they were forced to leave the land's surface. </p>
+
+<p><b>7. The Shadow Clan: The Fractured Mirrors:</b><br>
+<b>Magic:</b><br> Shadow Clan resonance expresses itself through redirection, suppression, and transfer. Their weaves can condense shadow into temporary physical forms, redirect or suppress light, transfer heat from one place to another, dampen vibrations, quiet magical resonance, and detect residual resonance left behind by past events. Born from the shadow cast when Lysera passed her light to Vaessa</p>
+
+<p><b>8. The Unseeing:</b><br>
+They have no inherent ability to tune with Atheria. Their ancesters, <b> The Sighted Blood</b> angered the gods with their hubris and superiority complexes. Dehumanizing non magical people by segregating into castes. They do still have a unique Core Note, they are just unable to tune naturally. They can only use Rootmother's frequency and through years of strict and dedicated study can they tune their low frequencies with Atheria. However, through touch and sound the people as whole, have learned to "read" the vibrations and discovered Echo Glass, with which they've learned to collect, store and direct resonance. They physically cannot see the effects of magic e.g. lightening, glamours, concealment weaves, etc..They also, do not leave behind any magical resonance or odors </p>
+
+<p><b>9. The Irisireph:</b><br>
+<b>Magic:</b><br> The Irisireph are the living "immune system" of Atheria's emotional health. They were born of Echorin's tears when he sang his grief  in the meadows of the Songfields They are not a traditional society with an economy or borders, but rather living fragments of resonance, empathy made audible, and notes in the "Breath Beneath". They spend their days frolicking in the Songfields, tuning to softer frequencies, any dissonance they detect. </p>
+    </details>
+</div>
+</div>
+<br>
+ <p style="margin-top: 15px; padding-top: 10px;">
+  In Atherian astrometrics, we prioritize the <b>Birth Anniversary </b> which refers to the precise day your Core Note was written. Atherians age physically three years slower but mature mentally and emotionally three years faster than baseline mortals. </p>    
+ <p><em>Issued by the Bureau of Atmospheric Resonance and Celestial Compliance. Dignity is a requirement; if you have lost yours, check the bucket in the Lobby of Regret.</em></p>
+      <p><em>(Note: Lord Bailiff is currently vibrating at a low frequency across the starcharts. Do not disturb him; his role as a resonant sponge is critical during this Aurelion peak.)</em></p>
+<br>
+<div class=""></div>
+  <div class="navigation-links">
+<a href="https://themapmakersnotebooks.neocities.org/Web-Pages/grand-map" class="button"> View The Grand Map</a>
+<a href="https://themapmakersnotebooks.neocities.org/apothecary-divination" class="back"> Visit Selka's Apothecary</a>    
+<a href="https://themapmakersnotebooks.neocities.org/Web-Pages/cardspilot" class="button">Oracle Card Reading </a>    
+<a href="https://themapmakersnotebooks.neocities.org/resonant-chart" class="button"> Calculate your charts</a>    
+<a href="https://themapmakersnotebooks.neocities.org/Web-Pages/resonanceobserv-forecast" class="button">Track The Stars</a>
+<a href="https://themapmakersnotebooks.neocities.org/observatory" class="button"> Celestial Dome Observatory</a>      
+</div>
+</div>
+<script>
+  function toggleCelestialMenu() {
+      const menu = document.getElementById('celestialMenu');
+      const btn = document.getElementById('moonBtn');
+      const overlay = document.getElementById('menuOverlay');
+      menu.classList.toggle('is-open');
+      btn.classList.toggle('is-active');
+      overlay.classList.toggle('is-open');
+      if (menu.classList.contains('is-open')) {
+        btn.innerText = "🌕";
+      } else {
+        btn.innerText = "🌙";
+      }
+    }
+    function getBureaucraticMetric(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+      document.getElementById("brooding-counter").innerText = getBureaucraticMetric(28, 64);
+      document.getElementById("oatmeal-counter").innerText = getBureaucraticMetric(2, 9);
+      const remainingPatience = (Math.random() * (0.09 - 0.01) + 0.01).toFixed(2);
+      document.getElementById("patience-counter").innerText = remainingPatience + "%";
+    });
+    
+// Canvas Starfield Engine
+const canvas = document.getElementById("starfield");
+const ctx = canvas.getContext("2d");
+let stars = [];
+
+function initStars() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  stars = [];
+  for (let i = 0; i < 200; i++) {
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+     r: Math.random() * 1.3,
+      a: Math.random()
+    });
+  }
+}
+
+function drawStars() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  stars.forEach(s => {
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,255,255,${s.a})`;
+    ctx.fill();
+    s.a += (Math.random() - .5) * .04;
+    s.a = Math.max(0, Math.min(1, s.a));
+  });
+  requestAnimationFrame(drawStars);
+}
+
+window.addEventListener("resize", initStars);
+initStars();
+drawStars();
+// The magic wand that toggles the glowing class label
+function toggleGlow(cardElement) {
+  // .classList.toggle acts like a light switch. 
+  // If the 'glowing' label is there, it removes it. If it isn't, it adds it!
+  cardElement.classList.toggle('glowing');
+}
+
+</script>
+</body> 
+
+</html>
